@@ -1,16 +1,8 @@
-'use client'
-import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
-export default function Home() {
-  const account = useCurrentAccount();
-
+"use client"
+export default function Home() {  
   return (
-    <main>
-      <ConnectButton />
-      {account && (
-        <div>
-          <p>Connected as: {account.address}</p>
-        </div>
-      )}
-    </main>
-  );
+    <button onClick={()=> window.open('/generate', '_self')} className="bg-[#abffd4] text-black font-bold py-2 px-4 rounded">
+      generate your own nft pet
+    </button>
+  )
 }
