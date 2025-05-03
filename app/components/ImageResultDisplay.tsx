@@ -6,14 +6,16 @@ import { HistoryItem, HistoryPart } from "@/lib/types";
 
 interface ImageResultDisplayProps {
   imageUrl: string;
-  description: string | null;
+  backstory: string | null;
+  petName: string | null;
   onReset: () => void;
   conversationHistory?: HistoryItem[];
 }
 
 export function ImageResultDisplay({
   imageUrl,
-  description,
+  backstory,
+  petName,
   onReset,
   conversationHistory = [],
 }: ImageResultDisplayProps) {
@@ -63,10 +65,17 @@ export function ImageResultDisplay({
         />
       </div>
 
-      {description && (
+      {backstory && (
         <div className="p-4 rounded-lg bg-muted">
-          <h3 className="text-sm font-medium mb-2">Description</h3>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <h3 className="text-sm font-medium mb-2">BackStory</h3>
+          <p className="text-sm text-muted-foreground">{backstory}</p>
+        </div>
+      )}
+
+{petName && (
+        <div className="p-4 rounded-lg bg-muted">
+          <h3 className="text-sm font-medium mb-2">Name</h3>
+          <p className="text-sm text-muted-foreground">{petName}</p>
         </div>
       )}
 
