@@ -37,12 +37,21 @@ export default function Home() {
             Mint, nurture, and battle with unique companions that grow based on your interactions.
             Your Pixelated Pet evolves through on-chain activities and social engagement.
           </p>
-          <button
+         <div className='flex flex-col md:flex-row gap-4'>
+         <button
             onClick={() => window.open('/generate', '_self')}
             className="bg-gray-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-800 transition"
           >
             Mint Your Pet →
           </button>
+
+          <button
+            onClick={() => window.open('/showcase', '_self')}
+            className="bg-gray-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-800 transition"
+          >
+            Showcase
+          </button>
+         </div>
         </div>
 
         {/* Right Image Column */}
