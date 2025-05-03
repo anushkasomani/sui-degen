@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import "@mysten/dapp-kit/dist/index.css"; // <-- Import dApp Kit CSS
 import { Providers } from "./providers";   // <-- Import Providers
@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+});
+
 export const metadata: Metadata = {
   title: "Sui Overflow",
   description: "Degen",
@@ -26,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={oswald.variable}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

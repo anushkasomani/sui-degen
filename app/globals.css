@@ -57,7 +57,7 @@ body {
 
 /* Button styling */
 button {
-  background-color: #00bcd4;
+  background-color: #4B5563;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -68,7 +68,7 @@ button {
 }
 
 button:hover {
-  background-color: #008c9e;
+  background-color: gray-500;
 }
 
 /* Form styling */
