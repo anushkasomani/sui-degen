@@ -57,27 +57,27 @@ export function ImageResultDisplay({
         </div>
       </div>
 
-      <div className="rounded-lg overflow-hidden bg-muted p-2">
+      <div className="rounded-lg overflow-hidden bg-muted p-1">
         <img
           src={imageUrl}
           alt="Generated"
-          className="max-w-[640px] h-auto mx-auto"
+          className="max-w-[320px] h-auto mx-auto"
         />
       </div>
-
+      {petName && (
+        <div className="p-1 rounded-lg bg-muted">
+          <h3 className="text-sm font-medium mb-2">Name</h3>
+          <p className="text-sm text-muted-foreground">{petName}</p>
+        </div>
+      )}
       {backstory && (
-        <div className="p-4 rounded-lg bg-muted">
+        <div className="p-1 rounded-lg bg-muted">
           <h3 className="text-sm font-medium mb-2">BackStory</h3>
           <p className="text-sm text-muted-foreground">{backstory}</p>
         </div>
       )}
 
-{petName && (
-        <div className="p-4 rounded-lg bg-muted">
-          <h3 className="text-sm font-medium mb-2">Name</h3>
-          <p className="text-sm text-muted-foreground">{petName}</p>
-        </div>
-      )}
+
 
       {showHistory && conversationHistory.length > 0 && (
         <div className="p-4 rounded-lg">
@@ -101,7 +101,8 @@ export function ImageResultDisplay({
                           <img
                             src={part.image}
                             alt={`${item.role} image`}
-                            className="max-w-64 h-auto object-contain"
+                            className="object-contain"
+                            
                           />
                         </div>
                       )}

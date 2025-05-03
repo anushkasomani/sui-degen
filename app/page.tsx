@@ -2,10 +2,14 @@
 
 import Image from 'next/image';
 import { cn } from "@/lib/utils"; // make sure this utility exists
-
+import Navbar from './navbar';
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-white text-gray-900 font-sans dark:bg-black">
+      
+      <div className="relative z-30"> {/* Ensure Navbar is above the grid lines */}
+        <Navbar />
+      </div>
       {/* Grid background layer */}
       <div
         className={cn(

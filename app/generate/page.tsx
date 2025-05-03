@@ -103,7 +103,7 @@ export default function GenerateImage() {
   const displayImage = generatedImage;
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-background p-8">
+    <main className="min-h-screen flex items-center justify-center bg-background p-2 font-sans">
       <Card className="w-full max-w-4xl border-0 bg-card shadow-none">
         <CardHeader className="flex flex-col items-center space-y-2">
           <CardTitle className="flex items-center gap-2 text-foreground">

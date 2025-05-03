@@ -29,11 +29,11 @@ export function ImagePromptInput({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg">
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg font-sans">
       <div className="space-y-2">
-        <p className="text-sm font-medium text-foreground">
+        <p className="text-md font-medium text-foreground">
           {isEditing
-            ? "Describe how you want to edit the image/backstory"
+            ? "Describe how you want to edit the image"
             : "Describe the image you want to generate"}
         </p>
       </div>
@@ -50,9 +50,13 @@ export function ImagePromptInput({
         onChange={(e) => setPrompt(e.target.value)}
       />
 
-      <label htmlFor="backstory" className="block text-sm font-medium text-foreground">
-        Backstory
-      </label>
+<div className="space-y-2">
+        <p className="text-md font-medium text-foreground">
+          {isEditing
+            ? "Describe how you want to edit the backstory"
+            : "Describe the backstory of the pet"}
+        </p>
+      </div>
       <Input
         id="backstory"
         className="border-secondary"
