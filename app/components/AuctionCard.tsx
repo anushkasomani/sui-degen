@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export interface PetCardProps {
   petId: string;
@@ -32,6 +33,23 @@ const PetCard: React.FC<PetCardProps> = ({
   onExplore = () => {},
 }) => {
   const [isHovering, setIsHovering] = useState(false);
+  const router = useRouter();
+
+  const handleExplore = () => {
+    // Create URL with query parameters
+    const queryParams = new URLSearchParams({
+      petId,
+      name,
+      imageSrc,
+      evolutionLevel: evolutionLevel.toString(),
+      'stats.engagement': stats.engagement.toString(),
+      'stats.happiness': stats.happiness.toString(),
+      'stats.memePower': stats.memePower.toString(),
+      avatarSrc
+    });
+    
+    router.push(`/pet-details?${queryParams.toString()}`);
+  };
 
   return (
     <div 
@@ -126,7 +144,7 @@ const PetCard: React.FC<PetCardProps> = ({
 
         {/* BOTTOM BAR: Explore More */}
         <div
-          onClick={onExplore}
+          onClick={handleExplore}
           className={`
             absolute left-0 right-0 bottom-0
             bg-gray-300 text-gray-600 text-center font-medium
