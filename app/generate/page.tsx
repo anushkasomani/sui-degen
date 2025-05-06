@@ -243,7 +243,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-// const host = "http://localhost:10000";
+
 // Backend service URL
 const UPLOAD_SERVICE_URL = "https://uni-r63q.onrender.com";
 
@@ -257,9 +257,16 @@ export default function GenerateImage() {
   const [backstory, setBackstory] = useState<string | null>(null);
   const [petName, setPetName] = useState<string | null>(null);
   const [storageStatus, setStorageStatus] = useState<string | null>(null);
+  // Track if the current image is already stored on IPFS
+  const [isStoredOnIPFS, setIsStoredOnIPFS] = useState<boolean>(false);
+  // Store metadata for minting
+  const [storedMetadata, setStoredMetadata] = useState<any>(null);
 
   const handleImageSelect = (imageData: string) => {
     setImage(imageData || null);
+    // Reset storage status when new image is selected
+    setIsStoredOnIPFS(false);
+    setStoredMetadata(null);
   };
 
   // Helper function to upload image to backend
@@ -325,6 +332,9 @@ export default function GenerateImage() {
       setLoading(true);
       setError(null);
       setStorageStatus(null);
+      // Reset storage status when generating new image
+      setIsStoredOnIPFS(false);
+      setStoredMetadata(null);
 
       const imageToEdit = generatedImage || image;
 
@@ -373,43 +383,6 @@ export default function GenerateImage() {
 
         const updatedHistory = [...history, userMessage, aiResponse];
         setHistory(updatedHistory);
-
-        // Create structured metadata for storage
-        const metadata = {
-          prompt,
-          petName: data.petName || null,
-          backstory: data.backstory || userBackstory || null,
-          timestamp: new Date().toISOString(),
-          history: updatedHistory,
-        };
-
-        // Store the generated image and metadata
-        try {
-          setStorageStatus("Storing to decentralized storage...");
-
-          // Upload the generated image
-          const imageUploadResult = await uploadImageToBackend(
-            data.image,
-            `pet_nft_${Date.now()}.png`
-          );
-
-          // Include the image CID in metadata
-          metadata.imageCid = imageUploadResult.cid;
-          metadata.imageUrl = imageUploadResult.url;
-
-          // Upload the metadata
-          const metadataResult = await uploadMetadataToBackend(metadata);
-
-          console.log("Storage complete:", {
-            image: imageUploadResult,
-            metadata: metadataResult,
-          });
-
-          setStorageStatus("Successfully stored to decentralized storage!");
-        } catch (storageError) {
-          console.error("Storage error:", storageError);
-          setStorageStatus(`Storage error: ${storageError}`);
-        }
       } else {
         setError("No image returned from API");
       }
@@ -421,6 +394,71 @@ export default function GenerateImage() {
     }
   };
 
+  // New function to handle NFT minting (uploading to IPFS)
+  const handleMintNFT = async () => {
+    if (isStoredOnIPFS && storedMetadata) {
+      // Already stored, just return the existing data
+      return storedMetadata;
+    }
+    
+    setStorageStatus("Storing to decentralized storage...");
+    
+    try {
+      const imageToStore = generatedImage;
+      if (!imageToStore) {
+        throw new Error("No image available to mint");
+      }
+
+      // Create structured metadata for storage
+      const metadata = {
+        name: petName || "AI Pet NFT",
+        description: backstory || "A unique AI-generated pet NFT",
+        prompt: history.length > 0 
+          ? history[history.length - 2]?.parts[0]?.text 
+          : "AI-generated pet",
+        petName: petName || null,
+        backstory: backstory || null,
+        timestamp: new Date().toISOString(),
+        history: history,
+      };
+
+      // Upload the generated image
+      const imageUploadResult = await uploadImageToBackend(
+        imageToStore,
+        `pet_nft_${Date.now()}.png`
+      );
+
+      // Include the image CID in metadata
+      metadata.imageCid = imageUploadResult.cid;
+      metadata.imageUrl = imageUploadResult.url;
+
+      // Upload the metadata
+      const metadataResult = await uploadMetadataToBackend(metadata);
+
+      console.log("Storage complete:", {
+        image: imageUploadResult,
+        metadata: metadataResult,
+      });
+
+      // Store the results
+      setStoredMetadata({
+        image: imageUploadResult,
+        metadata: metadataResult
+      });
+      setIsStoredOnIPFS(true);
+      setStorageStatus("Successfully stored to decentralized storage!");
+      
+      return {
+        image: imageUploadResult,
+        metadata: metadataResult
+      };
+    } catch (error) {
+      console.error("Storage error:", error);
+      setStorageStatus(`Storage error: ${error}`);
+      throw error;
+    }
+  };
+
   const handleReset = () => {
     setImage(null);
     setGeneratedImage(null);
@@ -429,6 +467,8 @@ export default function GenerateImage() {
     setError(null);
     setHistory([]);
     setStorageStatus(null);
+    setIsStoredOnIPFS(false);
+    setStoredMetadata(null);
   };
 
   const currentImage = generatedImage || image;
@@ -496,7 +536,7 @@ export default function GenerateImage() {
                 petName={petName}
                 onReset={handleReset}
                 conversationHistory={history}
-                // storageStatus={storageStatus}
+                onMintNFT={handleMintNFT} // Pass the mint function
               />
               <ImagePromptInput
                 onSubmit={handlePromptSubmit}

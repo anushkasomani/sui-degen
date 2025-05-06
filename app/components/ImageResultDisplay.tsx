@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "./ui/button";
-import { Download, RotateCcw, MessageCircle } from "lucide-react";
+import { Download, RotateCcw, MessageCircle, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { HistoryItem, HistoryPart } from "@/lib/types";
 
@@ -10,6 +10,7 @@ interface ImageResultDisplayProps {
   petName: string | null;
   onReset: () => void;
   conversationHistory?: HistoryItem[];
+  onMintNFT?: () => Promise<any>; // New prop for minting NFT
 }
 
 export function ImageResultDisplay({
@@ -18,8 +19,11 @@ export function ImageResultDisplay({
   petName,
   onReset,
   conversationHistory = [],
+  onMintNFT, // New prop
 }: ImageResultDisplayProps) {
   const [showHistory, setShowHistory] = useState(false);
+  const [isMinting, setIsMinting] = useState(false); // Track minting state
+  const [mintStatus, setMintStatus] = useState<string | null>(null); // Track minting status
 
   const handleDownload = () => {
     // Create a temporary link element
@@ -33,6 +37,31 @@ export function ImageResultDisplay({
 
   const toggleHistory = () => {
     setShowHistory(!showHistory);
+  };
+
+  // New function to handle minting NFT
+  const handleMintNFT = async () => {
+    if (!onMintNFT) return;
+    
+    try {
+      setIsMinting(true);
+      setMintStatus("Minting your NFT pet...");
+      
+      // Call the provided mint function
+      const result = await onMintNFT();
+      
+      // Show success with IPFS link if available
+      if (result?.metadata?.url) {
+        setMintStatus(`Success! Your NFT pet is now stored on IPFS: ${result.metadata.url}`);
+      } else {
+        setMintStatus("Your NFT pet has been minted successfully!");
+      }
+    } catch (error) {
+      console.error("Minting error:", error);
+      setMintStatus(`Failed to mint: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } finally {
+      setIsMinting(false);
+    }
   };
 
   return (
@@ -77,7 +106,32 @@ export function ImageResultDisplay({
         </div>
       )}
 
-
+      {/* Add Mint NFT Button */}
+      {onMintNFT && (
+        <div className="mt-4 flex flex-col items-center">
+          <Button 
+            onClick={handleMintNFT} 
+            disabled={isMinting}
+            className="w-full md:w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-2 px-4 rounded-md"
+          >
+            <Sparkles className="w-4 h-4 mr-2" />
+            {isMinting ? "Minting NFT..." : "Mint NFT Pet"}
+          </Button>
+          
+          {/* Show mint status message */}
+          {mintStatus && (
+            <div className={`mt-2 p-3 rounded-md w-full text-sm ${
+              mintStatus.includes("Failed") || mintStatus.includes("failed")
+                ? "bg-red-100 text-red-700"
+                : mintStatus.includes("Success") || mintStatus.startsWith("Your NFT")
+                  ? "bg-green-100 text-green-700"
+                  : "bg-blue-100 text-blue-700"
+            }`}>
+              {mintStatus}
+            </div>
+          )}
+        </div>
+      )}
 
       {showHistory && conversationHistory.length > 0 && (
         <div className="p-4 rounded-lg">
@@ -102,7 +156,6 @@ export function ImageResultDisplay({
                             src={part.image}
                             alt={`${item.role} image`}
                             className="object-contain"
-                            
                           />
                         </div>
                       )}
