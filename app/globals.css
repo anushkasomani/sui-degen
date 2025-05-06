@@ -11,6 +11,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-oswald: var(--font-oswald);
+  --font-pixelify: var(--font-pixelify);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,9 +59,9 @@ body {
 
 /* Button styling */
 button {
-  background-color: #4B5563;
+  
   color: white;
-  border: none;
+  
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-size: 1rem;
@@ -101,3 +102,47 @@ select:focus {
   border-color: #00bcd4;
   box-shadow: 0 0 4px rgba(0, 188, 212, 0.5);
 }
+
+/* Add this to your globals.css file */
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes sway-slow {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+.animate-sway {
+  animation: sway 2s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+.animate-sway-slow {
+  animation: sway-slow 3s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+/* Add additional animation durations for Tailwind */
+.duration-2000 {
+  animation-duration: 2000ms;
+}
+
+.duration-3000 {
+  animation-duration: 3000ms;
+}
+
+.duration-4000 {
+  animation-duration: 4000ms;
+}
+
