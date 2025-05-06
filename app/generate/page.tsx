@@ -243,9 +243,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-const host = "http://localhost:10000";
+// const host = "http://localhost:10000";
 // Backend service URL
-const UPLOAD_SERVICE_URL = host || "https://your-render-service.onrender.com";
+const UPLOAD_SERVICE_URL = "https://uni-r63q.onrender.com";
 
 export default function GenerateImage() {
   const [image, setImage] = useState<string | null>(null);
