@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import "@mysten/dapp-kit/dist/index.css"; // <-- Import dApp Kit CSS
 import { Providers } from "./providers";   // <-- Import Providers
-import Navbar from "./navbar"; // <-- Import Navbar 
+import { Pixelify_Sans } from "next/font/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,6 +20,13 @@ const oswald = Oswald({
   variable: "--font-oswald",
 });
 
+const pixelify = Pixelify_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'], // Specify the weights you need
+  display: 'swap',
+  variable: '--font-pixelify',
+})
+
 export const metadata: Metadata = {
   title: "Sui Overflow",
   description: "Degen",
@@ -32,8 +39,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={oswald.variable}>
+      
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${pixelify.variable} antialiased`}
       >
         <Providers>
           {children}
