@@ -327,7 +327,7 @@ export default function GenerateImage() {
     }
   };
 
-  const handlePromptSubmit = async (prompt: string, userBackstory: string) => {
+  const handlePromptSubmit = async (prompt: string, userBackstory: string, artStyle: string) => {
     try {
       setLoading(true);
       setError(null);
@@ -343,6 +343,7 @@ export default function GenerateImage() {
         image: imageToEdit,
         history: history.length > 0 ? history : undefined,
         backstory: userBackstory || null,
+        artStyle: artStyle || null,
       };
 
       const response = await fetch("/api/image", {
