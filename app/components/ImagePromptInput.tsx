@@ -98,7 +98,7 @@ export function ImagePromptInput({
       <Button
         type="submit"
         disabled={!prompt.trim() || isLoading}
-        className="w-full bg-primary hover:bg-primary/90"
+        className="w-full bg-gray-500"
       >
         <Wand2 className="w-4 h-4 mr-2" />
         {isEditing ? "Edit Image" : "Generate Image"}
