@@ -95,7 +95,7 @@ export function ImageUpload({ onImageSelect, currentImage, onError }: ImageUploa
           <input {...getInputProps()} />
           <div className="flex flex-row items-center" role="presentation">
             <UploadIcon className="w-8 h-8 text-primary mr-3 flex-shrink-0" aria-hidden="true" />
-            <div className="">
+            <div className="font-courier-prime">
               <p className="text-sm font-medium text-foreground">
                 Drop your image here or click to browse
               </p>

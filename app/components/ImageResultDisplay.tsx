@@ -65,58 +65,64 @@ export function ImageResultDisplay({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="p-6">
+      
+
+<div className="flex flex-col md:flex-row justify-between space-x-0 md:space-x-10">
+ <div className="rounded-lg  bg-muted p-1">
+        <img
+          src={imageUrl}
+          alt="Generated"
+          className="max-w-[320px] h-auto w-[300px]"
+        />
+      </div>
+     
+       <div className="flex flex-col ">
+         <div className="p-1 rounded-lg bg-muted">
+          
+          <h1 className="text-2xl text-muted-foreground font-pixelify">{petName}</h1>
+        </div>
+     
+      
+        <div className="p-1 rounded-lg bg-muted">
+          <h3 className="text-xl font-medium mb-2 font-pixelify">Lore-</h3>
+          <p className="text-md text-muted-foreground font-courier-prime">{backstory}</p>
+        </div>
+       </div>
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Generated Image</h2>
-        <div className="space-x-2">
-          <Button className="outline sm" onClick={handleDownload}>
+        
+        <div className="space-x-2 flex flex-col space-y-2">
+          <Button className="outline sm bg-[#C9C9AA] font-pixelify" onClick={handleDownload}>
             <Download className="w-4 h-4 mr-2" />
             Download
           </Button>
           {conversationHistory.length > 0 && (
-            <Button className="outline sm" onClick={toggleHistory}>
+            <Button className="outline sm bg-[#C9C9AA] font-pixelify" onClick={toggleHistory}>
               <MessageCircle className="w-4 h-4 mr-2" />
               {showHistory ? "Hide History" : "Show History"}
             </Button>
           )}
-          <Button className="outline sm" onClick={onReset}>
+          <Button className="outline sm bg-[#C9C9AA] font-pixelify" onClick={onReset}>
             <RotateCcw className="w-4 h-4 mr-2" />
             Create New Image
           </Button>
+          {onMintNFT && (
+          <Button
+        onClick={handleMintNFT}
+        disabled={isMinting}
+        className="outline sm bg-cyan-500 hover:bg-cyan-600 text-white font-pixelify"
+          >
+        <Sparkles className="w-4 h-4 mr-2" />
+        {isMinting ? "Minting NFT..." : "Mint NFT Pet"}
+          </Button>
+        )}
         </div>
       </div>
+</div>
 
-      <div className="rounded-lg overflow-hidden bg-muted p-1">
-        <img
-          src={imageUrl}
-          alt="Generated"
-          className="max-w-[320px] h-auto mx-auto"
-        />
-      </div>
-      {petName && (
-        <div className="p-1 rounded-lg bg-muted">
-          <h3 className="text-sm font-medium mb-2">Name</h3>
-          <p className="text-sm text-muted-foreground">{petName}</p>
-        </div>
-      )}
-      {backstory && (
-        <div className="p-1 rounded-lg bg-muted">
-          <h3 className="text-sm font-medium mb-2">BackStory</h3>
-          <p className="text-sm text-muted-foreground">{backstory}</p>
-        </div>
-      )}
-
-      {/* Add Mint NFT Button */}
       {onMintNFT && (
         <div className="mt-4 flex flex-col items-center">
-          <Button 
-            onClick={handleMintNFT} 
-            disabled={isMinting}
-            className="w-full md:w-auto bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white py-2 px-4 rounded-md"
-          >
-            <Sparkles className="w-4 h-4 mr-2" />
-            {isMinting ? "Minting NFT..." : "Mint NFT Pet"}
-          </Button>
+         
           
           {/* Show mint status message */}
           {mintStatus && (
@@ -134,19 +140,19 @@ export function ImageResultDisplay({
       )}
 
       {showHistory && conversationHistory.length > 0 && (
-        <div className="p-4 rounded-lg">
-          <h3 className="text-sm font-medium mb-4">Conversation History</h3>
+        <div className="p-4 rounded-lg font-courier-prime">
+          <h3 className="text-sm font-medium mb-2">Conversation History</h3>
           <div className="space-y-4">
             {conversationHistory.map((item, index) => (
               <div key={index} className={`p-3 rounded-lg bg-secondary`}>
                 <p
-                  className={`text-sm font-medium mb-2 ${
+                  className={`text-sm font-medium mb-1 ${
                     item.role === "user" ? "text-foreground" : "text-primary"
                   }`}
                 >
                   {item.role === "user" ? "You" : "Gemini"}
                 </p>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {item.parts.map((part: HistoryPart, partIndex) => (
                     <div key={partIndex}>
                       {part.text && <p className="text-sm">{part.text}</p>}
@@ -155,7 +161,7 @@ export function ImageResultDisplay({
                           <img
                             src={part.image}
                             alt={`${item.role} image`}
-                            className="object-contain"
+                            className="object-contain w-[300px] h-auto"
                           />
                         </div>
                       )}

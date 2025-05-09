@@ -12,6 +12,8 @@
   --font-mono: var(--font-geist-mono);
   --font-oswald: var(--font-oswald);
   --font-pixelify: var(--font-pixelify);
+  --font-courier-prime: var(--font-courier-prime);
+  --font-press-start-2p: var(--font-press-start-2p);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -59,7 +61,6 @@ body {
 
 /* Button styling */
 button {
-  
   color: black;
   padding: 0.5rem 1rem;
   border-radius: 4px;

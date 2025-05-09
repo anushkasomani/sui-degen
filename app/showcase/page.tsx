@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import PetCard from '../components/AuctionCard';
+import TiltedCard from '../components/TiltedCard';
 const petData = [
   {
     petId: '123',
@@ -54,6 +55,25 @@ export default function HomepagePreview() {
             ))}
           </div>
         </div>
+        <TiltedCard
+  imageSrc="https://i.scdn.co/image/ab67616d0000b273d9985092cd88bffd97653b58"
+  altText="Kendrick Lamar - GNX Album Cover"
+  captionText="Kendrick Lamar - GNX"
+  containerHeight="400px"
+  containerWidth="400px"
+  imageHeight="300px"
+  imageWidth="300px"
+  rotateAmplitude={12}
+  scaleOnHover={1.2}
+  showMobileWarning={false}
+  showTooltip={true}
+  displayOverlayContent={true}
+  overlayContent={
+    <p className="tilted-card-demo-text">
+      Kendrick Lamar - GNX
+    </p>
+  }
+/>
       </main>
     </div>
   ); 
