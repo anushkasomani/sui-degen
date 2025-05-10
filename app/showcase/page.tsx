@@ -2,6 +2,7 @@
 import React from 'react';
 import PetCard from '../components/AuctionCard';
 import TiltedCard from '../components/TiltedCard';
+
 const petData = [
   {
     petId: '123',
@@ -31,50 +32,32 @@ const petData = [
 
 export default function HomepagePreview() {
   return (
-    <div className="bg-white p-4 w-full">
-      {/* <header className="bg-white shadow-sm rounded-lg mb-6">
-        <div className="py-4 px-6 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-800">Digital Pet Collection</h1>
-          <div className="flex items-center space-x-2">
-            <button className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md text-sm font-medium">
-              My Collection
-            </button>
-            <button className="px-3 py-1 bg-gray-700 hover:bg-gray-800 text-white rounded-md text-sm font-medium">
-              Marketplace
-            </button>
+    <div className="relative min-h-screen w-full">
+      <div
+        className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/igb.png)' }}
+      />
+      
+      <img
+        src="/ret.png"
+        alt="Dog"
+        className="absolute bottom-0 left-0 z-40 w-[250px] h-auto max-w-full md:max-w-[30%] sm:max-w-[40%]"
+      />
+      
+      {/* Container for content with padding to center it */}
+      <div className="relative min-h-screen w-full flex items-center justify-center p-4">
+        {/* Scrollable content box that takes 80% of viewport */}
+        <div className="w-4/5 min-h-screen overflow-y-auto bg-white bg-opacity-90 rounded-lg shadow-lg p-4 flex items-center justify-center flex-col space-y-1">
+          <div className="mb-6">
+            <h2 className="text-lg font-semibold text-gray-700 mb-3">Featured Pets</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {petData.map((pet) => (
+                <PetCard key={pet.petId} {...pet} />
+              ))}
+            </div>
           </div>
         </div>
-      </header> */}
-
-      <main>
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-3">Featured Pets</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {petData.map((pet) => (
-              <PetCard key={pet.petId} {...pet} />
-            ))}
-          </div>
-        </div>
-        <TiltedCard
-  imageSrc="https://i.scdn.co/image/ab67616d0000b273d9985092cd88bffd97653b58"
-  altText="Kendrick Lamar - GNX Album Cover"
-  captionText="Kendrick Lamar - GNX"
-  containerHeight="400px"
-  containerWidth="400px"
-  imageHeight="300px"
-  imageWidth="300px"
-  rotateAmplitude={12}
-  scaleOnHover={1.2}
-  showMobileWarning={false}
-  showTooltip={true}
-  displayOverlayContent={true}
-  overlayContent={
-    <p className="tilted-card-demo-text">
-      Kendrick Lamar - GNX
-    </p>
-  }
-/>
-      </main>
+      </div>
     </div>
-  ); 
+  );
 }
