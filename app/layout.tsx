@@ -6,6 +6,7 @@ import { Providers } from "./providers";   // <-- Import Providers
 import { Pixelify_Sans } from "next/font/google";
 import { Courier_Prime } from "next/font/google";
 import { Press_Start_2P } from "next/font/google";
+import {Toaster} from "react-hot-toast"
 
 const pressStart2P = Press_Start_2P({ 
   subsets: ["latin"],  
@@ -59,7 +60,9 @@ export default function RootLayout({
       >
         <Providers>
           {children}
+          
         </Providers>
+         <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>
   );
