@@ -1,8 +1,9 @@
 "use client";
 import { Button } from "./ui/button";
 import { Download, RotateCcw, MessageCircle, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HistoryItem, HistoryPart } from "@/lib/types";
+import toast from "react-hot-toast";
 
 interface ImageResultDisplayProps {
   imageUrl: string;
@@ -22,11 +23,32 @@ export function ImageResultDisplay({
   onMintNFT, // New prop
 }: ImageResultDisplayProps) {
   const [showHistory, setShowHistory] = useState(false);
-  const [isMinting, setIsMinting] = useState(false); // Track minting state
-  const [mintStatus, setMintStatus] = useState<string | null>(null); // Track minting status
+  const [isMinting, setIsMinting] = useState(false); 
+  const [mintStatus, setMintStatus] = useState<string | null>(null); 
+  function base64ToFile(base64: string, filename: string): File {
+  const arr = base64.split(',');
+  const mimeMatch = arr[0].match(/:(.*?);/);
 
+  if (!mimeMatch) {
+    throw new Error('Invalid base64 image');
+  }
+
+  const mime = mimeMatch[1];
+  const bstr = atob(arr[1]); // Decode base64 string
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], filename, { type: mime });
+}
+useEffect(()=>{
+const file = base64ToFile(imageUrl, "image.png");
+console.log(file);
+},[])
   const handleDownload = () => {
-    // Create a temporary link element
     const link = document.createElement("a");
     link.href = imageUrl;
     link.download = `gemini-image-${Date.now()}.png`;
@@ -39,28 +61,62 @@ export function ImageResultDisplay({
     setShowHistory(!showHistory);
   };
 
-  // New function to handle minting NFT
-  const handleMintNFT = async () => {
-    if (!onMintNFT) return;
+ 
+  // const handleMintNFT = async () => {
+  //   if (!onMintNFT) return;
     
+  //   try {
+  //     setIsMinting(true);
+  //     setMintStatus("Minting your NFT pet...");
+      
+  //     // Call the provided mint function
+  //     const result = await onMintNFT();
+      
+  //     // Show success with IPFS link if available
+  //     if (result?.metadata?.url) {
+  //       setMintStatus(`Success! Your NFT pet is now stored on IPFS: ${result.metadata.url}`);
+  //     } else {
+  //       setMintStatus("Your NFT pet has been minted successfully!");
+  //     }
+  //   } catch (error) {
+  //     console.error("Minting error:", error);
+  //     setMintStatus(`Failed to mint: ${error instanceof Error ? error.message : "Unknown error"}`);
+  //   } finally {
+  //     setIsMinting(false);
+  //   }
+  // };
+
+const handleMintNFT = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsMinting(true)
+  const file = base64ToFile(imageUrl, "image.png");
+    if (!file) {
+      throw Error("no file!")
+      setIsMinting(false)
+      
+    }
+
     try {
-      setIsMinting(true);
-      setMintStatus("Minting your NFT pet...");
       
-      // Call the provided mint function
-      const result = await onMintNFT();
-      
-      // Show success with IPFS link if available
-      if (result?.metadata?.url) {
-        setMintStatus(`Success! Your NFT pet is now stored on IPFS: ${result.metadata.url}`);
-      } else {
-        setMintStatus("Your NFT pet has been minted successfully!");
+      const formData = new FormData();
+      formData.append("file", file);
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Upload failed");
       }
-    } catch (error) {
-      console.error("Minting error:", error);
-      setMintStatus(`Failed to mint: ${error instanceof Error ? error.message : "Unknown error"}`);
-    } finally {
-      setIsMinting(false);
+
+      const result = await response.json();
+      console.log("result is", result)
+      setIsMinting(false)
+      toast.success("NFT Minted")
+    } catch (err) {
+      console.error("Upload error:", err);
+      setIsMinting(false)
     }
   };
 
@@ -92,7 +148,7 @@ export function ImageResultDisplay({
       <div className="flex items-center justify-between">
         
         <div className="space-x-2 flex flex-col space-y-2">
-          <Button className="outline sm bg-[#C9C9AA] font-pixelify" onClick={handleDownload}>
+          <Button className="outline sm bg-[#C9C9AA] font-pixelify" onClick={handleDownload} disabled={isMinting}>
             <Download className="w-4 h-4 mr-2" />
             Download
           </Button>
