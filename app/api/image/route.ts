@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { HistoryItem, HistoryPart } from "@/lib/types";
-import { text } from "stream/consumers";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
@@ -146,11 +145,27 @@ function buildMessageParts(prompt: string, backstory: string, inputImage: string
   console.log("artStyle", artStyle);
   const messageParts: any[] = [
     { text: `Backstory: ${backstory}` }, 
-    { text: `You are an agent which generates NFT pets.
-      If nothing specified in the prompt, then generate an square image of a baby pet mentioned in the prompt. If no art style mentioned,
-      generate in the standard way NFTs are. Generate high quality aesthetic art` }, 
-    { text: `Prompt given by the user: ${prompt}` },
-    { text: `Art style: ${artStyle || "Standard"}` },
+    { text: `You are an AI agent that generates NFT pets.
+Instructions:
+- Always generate a **square** image of a **baby version** of the animal described in the prompt.
+- Ensure the pet is centered with soft, aesthetic backgrounds (minimal, pastel, or abstract).
+- Every pet should have a **distinctive accessory or visual trait** (e.g., goggles, scarf, beanie, cyber glasses).
+- Make the pet visually unique and collectible — suitable for OpenSea-style NFT marketplaces.
+Prompt from user: "${prompt}"
+Art Style: "${artStyle || "None specified"}"
+If no art style is specified:
+- Default to popular NFT art styles like:
+  - Flat vector cartoon
+  - Cute hand-drawn sketch
+  - Watercolor illustration
+  - Soft pixel art
+- Avoid 3D realism unless explicitly requested.
+- Avoid photographic or lifelike rendering.
+
+If the user specifies a style, **strictly follow it**, but still ensure the result looks collectible, visually pleasing, and uniquely stylized.
+Generate a high-quality, aesthetic image in the standard collectible NFT format.` }
+ 
+    
   ];
   
   if (inputImage) {
