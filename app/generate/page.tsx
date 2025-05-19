@@ -7,15 +7,6 @@ import { HistoryItem } from "@/lib/types";
 import { ImageUpload } from "../components/ImageUpload";
 import { ImagePromptInput } from "../components/ImagePromptInput";
 import { ImageResultDisplay } from "../components/ImageResultDisplay";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-
-// Backend service URL
-const UPLOAD_SERVICE_URL = "https://uni-r63q.onrender.com";
 
 export default function GenerateImage() {
   const [image, setImage] = useState<string | null>(null);
