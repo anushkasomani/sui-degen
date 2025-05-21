@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSuiClient } from "@mysten/dapp-kit";
 import NFTCard from "../components/NFTCard";
+import { ConnectButton } from "@mysten/dapp-kit";
 const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
 export default function Home(){
   const client= useSuiClient();
@@ -49,6 +50,7 @@ export default function Home(){
   return(
     <div>
         <div className="bg-white p-6 rounded-xl shadow-lg">
+          <ConnectButton/>
                 <h2 className="text-xl font-semibold mb-4">Your NFTs</h2>
       
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

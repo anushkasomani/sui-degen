@@ -6,17 +6,27 @@ import {
   useSuiClientQuery,
 } from "@mysten/dapp-kit";
 import { Transaction } from "@mysten/sui/transactions";
-import dynamic from "next/dynamic";
-import { useState } from "react";
-// import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useAccounts } from "@mysten/dapp-kit";
 const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
 const package_id="0x694dbe3915180f195f1e1a05623d7c3e2e26a08533afacb29c9a1d12dcc22c10"
+const global_id="0x6ddd851cbd64b960aa2447d584f018a651ec6c2d67621f8b02cc9957bdb60aa2"
+const DEDICATED_PAYMENT_COIN_ID="0x4b3da5a8052a85bb868c046d633c657a61ec1664eb44e69fb224ee8ad83c8b24"
 
 export default function NFTCard({ nft }) {
-  // const dynamicNftPackageId = TESTNET_DYNAMIC_NFT_PACKAGE_ID;
+  // const [acc, setacc] = useState<string | null>(null)
+  // const accounts= useAccounts();
+  // useEffect(()=>{
+  //   if (accounts[0]) {
+  //     setacc(accounts[0].address);
+  //   }
+  //   console.log("connected acc",accounts[0].address)
+  // }, [accounts]);
+  
   const client = useSuiClient();
   const currentAccount = useCurrentAccount();
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
+  
   const { data, isPending, error, refetch } = useSuiClientQuery("getObject", {
     id: nft.id,
     options: {
@@ -78,20 +88,52 @@ export default function NFTCard({ nft }) {
   };
 
   const handleFeed = async () => {
+    
     // e.preventDefault();
     // if (!newImageUrl) return;
+  //    const { data: coins } = await client.getCoins({
+  //   owner: acc,
+  //   coinType: '0x2::sui::SUI'
+  // });
 
-    const tx = new Transaction();
+  // 4. Select coin with ≥0.06 SUI or largest available
+  // const requiredAmount = 50_000_000; // 0.06 SUI (buffer)
+  // let paymentCoinId = coins.find(c => 
+  //   BigInt(c.balance) >= BigInt(requiredAmount)
+  // )?.coinObjectId;
 
-    tx.moveCall({
-      target: `${package_id}::dynamic_nft::feed`,
-      arguments: [
-        tx.object(NFT_Collection_ID), // &mut NFTCollection
-        tx.pure.u64(nft.nft_id), // nft_id as u64
-        // new_url as String
-      ],
-    });
+  // 5. If no adequate coin, use largest one
+  // if (!paymentCoinId) {
+  //   const largestCoin = coins.reduce((a, b) => 
+  //     BigInt(a.balance) > BigInt(b.balance) ? a : b
+  //   );
+  //   paymentCoinId = largestCoin.coinObjectId;
+  // }
+  //    const tx = new Transaction();
 
+  // // Split exact 0.05 SUI if needed
+  // const [paymentCoin] = tx.splitCoins(
+  //   tx.object(paymentCoinId),
+  //   [tx.pure.u64(50_000_000)] // 0.05 SUI
+  // );
+ const tx = new Transaction();
+
+// Split proper amount (0.05 SUI)
+const [coins] = tx.splitCoins(tx.gas, [tx.pure.u64(50_000_000)]);
+
+// Feed call
+tx.moveCall({
+  target: `${package_id}::tailz::feed`,
+  arguments: [
+    tx.object(NFT_Collection_ID),
+    tx.pure.u64(nft.nft_id),
+    coins,
+    tx.object(global_id)
+  ],
+});
+
+// Set proper gas budget
+tx.setGasBudget(200_000_000);
     signAndExecute(
       {
         transaction: tx,
@@ -112,20 +154,24 @@ export default function NFTCard({ nft }) {
   };
 
   const handleTrain = async () => {
-    // e.preventDefault();
-    // if (!newImageUrl) return;
+   const tx = new Transaction();
 
-    const tx = new Transaction();
+// Split proper amount (0.05 SUI)
+const [coins] = tx.splitCoins(tx.gas, [tx.pure.u64(50_000_000)]);
 
-    tx.moveCall({
-      target: `${package_id}::dynamic_nft::train`,
-      arguments: [
-        tx.object(NFT_Collection_ID), // &mut NFTCollection
-        tx.pure.u64(nft.nft_id), // nft_id as u64
-        // new_url as String
-      ],
-    });
+// Feed call
+tx.moveCall({
+  target: `${package_id}::tailz::feed`,
+  arguments: [
+    tx.object(NFT_Collection_ID),
+    tx.pure.u64(nft.nft_id),
+    coins,
+    tx.object(global_id)
+  ],
+});
 
+// Set proper gas budget
+tx.setGasBudget(200_000_000);
     signAndExecute(
       {
         transaction: tx,
@@ -183,6 +229,7 @@ export default function NFTCard({ nft }) {
 
   return (
     <div className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+      
       <div className="w-full h-100 p-3">
         <img
           src={nft.image_url}
