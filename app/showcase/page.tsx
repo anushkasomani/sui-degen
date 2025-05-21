@@ -1,63 +1,66 @@
 'use client'
-import React from 'react';
-import PetCard from '../components/AuctionCard';
-import TiltedCard from '../components/TiltedCard';
+import { useQuery } from "@tanstack/react-query";
+import { useSuiClient } from "@mysten/dapp-kit";
+import NFTCard from "../components/NFTCard";
+import { ConnectButton } from "@mysten/dapp-kit";
+const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
+export default function Home(){
+  const client= useSuiClient();
+  const { data: nfts } = useQuery({
+    queryKey: ["nfts"],
+    queryFn: async () => {
+      const collection = await client.getObject({
+        id: NFT_Collection_ID,
+        options: { showContent: true },
+      });
 
-const petData = [
-  {
-    petId: '123',
-    name: 'Sharky',
-    evolutionLevel: 1,
-    stats: { engagement: 12, happiness: 9, memePower: 80 },
-    imageSrc: '/show1.png',
-    avatarSrc: '/avatars/sharky-avatar.png',
-  },
-  {
-    petId: '456',
-    name: 'Bubbles',
-    evolutionLevel: 2,
-    stats: { engagement: 15, happiness: 12, memePower: 65 },
-    imageSrc: '/show2.png',
-    avatarSrc: '/avatars/bubbles-avatar.png',
-  },
-  {
-    petId: '789',
-    name: 'Nemo',
-    evolutionLevel: 3,
-    stats: { engagement: 20, happiness: 18, memePower: 90 },
-    imageSrc: '/show3.png',
-    avatarSrc: '/avatars/nemo-avatar.png',
-  },
-];
+      const nftsTableId =
+        collection.data?.content?.fields?.nfts?.fields?.id?.id;
 
-export default function HomepagePreview() {
-  return (
-    <div className="relative min-h-screen w-full">
-      <div
-        className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/igb.png)' }}
-      />
+      const nfts = await client.getDynamicFields({
+        parentId: nftsTableId,
+      });
+
+      return Promise.all(
+        nfts.data.map(async (nft) => {
+          const nftData = await client.getObject({
+            id: nft.objectId,
+            options: { showContent: true },
+          });
+
+          // The fields are nested in nftData.data.content.fields
+          const fields = nftData.data?.content?.fields;
+          console.log(nftData.data.content.fields.nft_id);
+          return {
+            id: nftData.data?.objectId,
+            image_url: nftData.data.content.fields.image_url, // Url is a struct, value is the string
+            level: nftData.data.content.fields.level,
+            nft_id: nftData.data.content.fields.nft_id,
+            owner: nftData.data.content.fields.owner,
+            happiness: nftData.data.content.fields.happiness,
+            power: nftData.data.content.fields.power,
+            multiplier: nftData.data.content.fields.multiplier,
+            points: nftData.data.content.fields.points,
+          };
+        })
+      );
+    },
+  });
+
+  return(
+    <div>
+        <div className="bg-white p-6 rounded-xl shadow-lg">
+          <ConnectButton/>
+                <h2 className="text-xl font-semibold mb-4">Your NFTs</h2>
       
-      <img
-        src="/ret.png"
-        alt="Dog"
-        className="absolute bottom-0 left-0 z-40 w-[250px] h-auto max-w-full md:max-w-[30%] sm:max-w-[40%]"
-      />
-      
-      {/* Container for content with padding to center it */}
-      <div className="relative min-h-screen w-full flex items-center justify-center p-4">
-        {/* Scrollable content box that takes 80% of viewport */}
-        <div className="w-4/5 min-h-screen overflow-y-auto bg-white bg-opacity-90 rounded-lg shadow-lg p-4 flex items-center justify-center flex-col space-y-1">
-          <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-700 mb-3">Featured Pets</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {petData.map((pet) => (
-                <PetCard key={pet.petId} {...pet} />
-              ))}
-            </div>
-          </div>
-        </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {nfts?.map((nft) => (
+                    <NFTCard key={nft.id} nft={nft} />
+                  ))}
+                </div>
+                </div>
+          
+        
       </div>
-    </div>
-  );
+  )
 }

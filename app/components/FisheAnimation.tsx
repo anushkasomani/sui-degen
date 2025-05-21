@@ -17,6 +17,7 @@ export default function SwimmingFishes() {
   }, []);
   
   return (
+    <div>
     <div
       className="relative w-full h-screen overflow-hidden"
       style={{
@@ -94,5 +95,42 @@ export default function SwimmingFishes() {
         )}
       </div>
     </div>
-  );
+   
+    <div
+      className="w-full min-h-screen flex flex-col items-center justify-center px-4 py-20"
+      style={{
+        backgroundImage: `url('/back.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        imageRendering: 'pixelated',
+      }}
+      id="info-section"
+    >
+       <div className="relative min-h-screen w-full flex items-center justify-center p-4">
+    {/* Scrollable content box that takes 80% of viewport */}
+    <div className="w-4/5 min-h-screen overflow-y-auto bg-white/95 rounded-lg shadow-lg p-4 flex items-center flex-col space-y-1">
+     {/* <h1 className="font-pixelify text-xl md:text-5xl font-extrabold text-center text-gray-800 mb-6 p-4">
+      About Token Tails
+    </h1> */}
+    <BlurText
+                text="About Token Tails"
+                delay={300}
+                animateBy="words"
+                direction="top"
+                onAnimationComplete={handleAnimationComplete}
+                className="text-4xl md:text-5xl font-extrabold text-[#875131] tracking-wide font-pixelify p-4"
+              />
+      
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="px-12 py-3 text-white border-2 border-white font-pixelify rounded-md shadow-md hover:bg-green-700 transition"
+      >
+        Back to Top
+      </button>
+    </div>
+    </div>
+    </div>
+    </div>
+  )
 }
