@@ -8,6 +8,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { useSuiClient } from "@mysten/dapp-kit";
 import { ConnectButton } from "@mysten/dapp-kit";
+
 const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
 const package_id="0x694dbe3915180f195f1e1a05623d7c3e2e26a08533afacb29c9a1d12dcc22c10"
  
@@ -162,11 +163,12 @@ const handleMintNFT = async (e: React.FormEvent) => {
 //     );
 //   }
 
+
+
+
   return (
     <div className="p-6">
-      
-
-<div className="flex flex-col md:flex-row justify-between space-x-0 md:space-x-10">
+    <div className="flex flex-col md:flex-row justify-between space-x-0 md:space-x-10">
  <div className="rounded-lg  bg-muted p-1">
         <img
           src={imageUrl}
@@ -178,7 +180,10 @@ const handleMintNFT = async (e: React.FormEvent) => {
        <div className="flex flex-col ">
          <div className="p-1 rounded-lg bg-muted">
           <ConnectButton/>
-          <h1 className="text-2xl text-muted-foreground font-pixelify">{petName}</h1>
+
+      
+    
+        <h1 className="text-2xl text-muted-foreground font-pixelify">{petName}</h1>
         </div>
      
       
