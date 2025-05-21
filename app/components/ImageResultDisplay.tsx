@@ -4,7 +4,13 @@ import { Download, RotateCcw, MessageCircle, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { HistoryItem, HistoryPart } from "@/lib/types";
 import toast from "react-hot-toast";
-
+import { Transaction } from "@mysten/sui/transactions";
+import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { useSuiClient } from "@mysten/dapp-kit";
+import { ConnectButton } from "@mysten/dapp-kit";
+const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
+const package_id="0x694dbe3915180f195f1e1a05623d7c3e2e26a08533afacb29c9a1d12dcc22c10"
+ 
 interface ImageResultDisplayProps {
   imageUrl: string;
   backstory: string | null;
@@ -22,9 +28,13 @@ export function ImageResultDisplay({
   conversationHistory = [],
   onMintNFT, // New prop
 }: ImageResultDisplayProps) {
+   const client = useSuiClient();
+  const { mutate: signAndExecute, isPending: isMinting } =
+    useSignAndExecuteTransaction();
   const [showHistory, setShowHistory] = useState(false);
-  const [isMinting, setIsMinting] = useState(false); 
-  const [mintStatus, setMintStatus] = useState<string | null>(null); 
+  const [isMint, setIsMint] = useState(false); 
+  const [mintStatus, setMintStatus] = useState<string | null>(null);
+  const [imgUrl, setImgUrl] = useState<string>("intial"); 
   function base64ToFile(base64: string, filename: string): File {
   const arr = base64.split(',');
   const mimeMatch = arr[0].match(/:(.*?);/);
@@ -61,39 +71,13 @@ console.log(file);
     setShowHistory(!showHistory);
   };
 
- 
-  // const handleMintNFT = async () => {
-  //   if (!onMintNFT) return;
-    
-  //   try {
-  //     setIsMinting(true);
-  //     setMintStatus("Minting your NFT pet...");
-      
-  //     // Call the provided mint function
-  //     const result = await onMintNFT();
-      
-  //     // Show success with IPFS link if available
-  //     if (result?.metadata?.url) {
-  //       setMintStatus(`Success! Your NFT pet is now stored on IPFS: ${result.metadata.url}`);
-  //     } else {
-  //       setMintStatus("Your NFT pet has been minted successfully!");
-  //     }
-  //   } catch (error) {
-  //     console.error("Minting error:", error);
-  //     setMintStatus(`Failed to mint: ${error instanceof Error ? error.message : "Unknown error"}`);
-  //   } finally {
-  //     setIsMinting(false);
-  //   }
-  // };
-
 const handleMintNFT = async (e: React.FormEvent) => {
   e.preventDefault();
-  setIsMinting(true)
+  setIsMint(true)
   const file = base64ToFile(imageUrl, "image.png");
     if (!file) {
       throw Error("no file!")
-      setIsMinting(false)
-      
+      setIsMint(false) 
     }
 
     try {
@@ -111,14 +95,72 @@ const handleMintNFT = async (e: React.FormEvent) => {
       }
 
       const result = await response.json();
-      console.log("result is", result)
-      setIsMinting(false)
-      toast.success("NFT Minted")
+      console.log("result is", result);
+      console.log("cid is ", result.cid)
+      console.log("url is", result.url)
+      setIsMint(false)
+   
+      setImgUrl(result.url)
+      //Transaction block 
+      const txb = new Transaction();
+      txb.moveCall({
+      target: `${package_id}::tailz::mint`,
+      arguments: [
+        txb.object(NFT_Collection_ID),
+        txb.pure.string(result.url),
+      ],
+    })
+
+    signAndExecute(
+      {
+        transaction: txb,
+      },
+      {
+        onSuccess: async ({ digest }) => {
+             toast.success("NFT Minted")
+          const { effects } = await client.waitForTransaction({
+            digest,
+            options: {
+              showEffects: true,
+            },
+          });
+        },
+      }
+    );
+    
     } catch (err) {
       console.error("Upload error:", err);
-      setIsMinting(false)
+      setIsMint(false)
     }
   };
+
+//   const trying= async ()=>{
+//     console.log(imgUrl)
+// const txb = new Transaction();
+//       txb.moveCall({
+//       target: `${package_id}::tailz::mint`,
+//       arguments: [
+//         txb.object(NFT_Collection_ID),
+//         txb.pure.string("https://gateway.pinata.cloud/ipfs/bafybeidnlei5tnm5hfsc4qhukzqa5gv3xuggtnri4nwctbr7es256uxw4e"),
+//       ],
+//     })
+
+//     signAndExecute(
+//       {
+//         transaction: txb,
+//       },
+//       {
+//         onSuccess: async ({ digest }) => {
+//           const { effects } = await client.waitForTransaction({
+//             digest,
+//             options: {
+//               showEffects: true,
+//             },
+//           });
+//         },
+//       }
+//     );
+//   }
 
   return (
     <div className="p-6">
@@ -135,7 +177,7 @@ const handleMintNFT = async (e: React.FormEvent) => {
      
        <div className="flex flex-col ">
          <div className="p-1 rounded-lg bg-muted">
-          
+          <ConnectButton/>
           <h1 className="text-2xl text-muted-foreground font-pixelify">{petName}</h1>
         </div>
      
@@ -148,7 +190,7 @@ const handleMintNFT = async (e: React.FormEvent) => {
       <div className="flex items-center justify-between">
         
         <div className="space-x-2 flex flex-col space-y-2">
-          <Button className="outline sm bg-[#C9C9AA] font-pixelify" onClick={handleDownload} disabled={isMinting}>
+          <Button className="outline sm bg-[#C9C9AA] font-pixelify" onClick={handleDownload} disabled={isMint}>
             <Download className="w-4 h-4 mr-2" />
             Download
           </Button>
@@ -172,6 +214,7 @@ const handleMintNFT = async (e: React.FormEvent) => {
         {isMinting ? "Minting NFT..." : "Mint NFT Pet"}
           </Button>
         )}
+        {/* <button onClick={trying}>try</button> */}
         </div>
       </div>
 </div>
