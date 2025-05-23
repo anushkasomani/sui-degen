@@ -13,6 +13,7 @@ use sui::url::{Self, Url};
 
 use sui::transfer::public_transfer;
 use sui::sui::SUI;
+use sui::package;
 
 public struct TAILZ has drop {}
 // Error codes
@@ -82,8 +83,10 @@ public struct LeveledUp has copy, drop {
     level: u64,
 }
 
-// Initialization (unchanged)
-fun init(witness: TAILZ,ctx: &mut TxContext) {
+fun init(witness: TAILZ, ctx: &mut TxContext) {
+   
+    
+    // Rest of your original init function
     let (mut treasury, metadata) = coin::create_currency<TAILZ>(
             witness,
             6,
@@ -112,7 +115,6 @@ fun init(witness: TAILZ,ctx: &mut TxContext) {
         account_nfts: object_table::new(ctx),
     })
 }
-
 
 
 // Mint function updated with level initialization

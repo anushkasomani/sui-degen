@@ -3,7 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useSuiClient } from "@mysten/dapp-kit";
 import NFTCard from "../components/NFTCard";
 import { ConnectButton } from "@mysten/dapp-kit";
-const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
+const NFT_Collection_ID="0xc03ee66d6922dcb94a79c1f8fb9252575044e117106219b725a3d4e032bce40b"
+const package_id="0x58ef067daa0ad013898fb0a8c05cab46820c6521bfc0ec5570c20747d55d3d12"
+const global_id="0x7aeb26d8e631b516a9d0f2789214867bba25ffff6a8d520d68ae5c52440be2f6"
+const battleCollectionId="0xd848c8b40736f054f1834ac5d13699967989ae47e9a1f54338598e1fb8833466"
 export default function Home(){
   const client= useSuiClient();
   const { data: nfts } = useQuery({
