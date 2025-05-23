@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSuiClient } from "@mysten/dapp-kit";
 import NFTCard from "../components/NFTCard";
 import { ConnectButton } from "@mysten/dapp-kit";
-const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
+import { NFT_Collection_ID } from "../utils/constants";
 export default function Home(){
   const client= useSuiClient();
   const { data: nfts } = useQuery({

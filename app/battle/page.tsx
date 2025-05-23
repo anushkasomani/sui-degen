@@ -4,6 +4,7 @@ import { useAccounts, useSuiClient } from "@mysten/dapp-kit";
 import { useQuery } from "@tanstack/react-query";
 import BattleCreator from "../components/BattleCreator";
 import BattleCard from "../components/BattleCard";
+import { battleCollectionId } from "../utils/constants";
 
 interface Battle {
   id: string;
@@ -15,11 +16,11 @@ interface Battle {
   creator: string;
   is_active: boolean;
   created_at: Date;
+  stake_info: any;
   duration: number;
 }
 
-const battleCollectionId =
-  "0xd848c8b40736f054f1834ac5d13699967989ae47e9a1f54338598e1fb8833466";
+
 
 export default function BattlePage() {
   const client = useSuiClient();
@@ -63,7 +64,8 @@ export default function BattlePage() {
               stake_total_pet2: fields?.stake_total_pet2,
               creator: fields?.creator,
               is_active: fields?.is_active,
-              created_at: new Date(), // Client-side timestamp
+              stake_info: fields?.stake_info,
+              created_at: fields?.created_at,
               duration: battleDurations[battleId] || 300, // Use stored duration or default
             } as Battle;
           })

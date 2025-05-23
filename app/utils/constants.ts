@@ -1,0 +1,6 @@
+const package_id="0x37b984d942488a3617fa744147882f02c5989e05a8889dfd239aaa22f5ba7fcb"
+const NFT_Collection_ID="0xd3e3705c434549af418d58a50e8425b055ff1d890c86c690c72493ef9bfe2831"
+const global_id="0xed7a010bb993eb0c0a591161ccd1d71e8a642f29f085f2d6b4831f41fb4183cf"
+const battleCollectionId="0xf538e1db0ef36077361ab005b20df9dfa664f4a4a198c70fb44c674269271e53"
+const tailzType="0x37b984d942488a3617fa744147882f02c5989e05a8889dfd239aaa22f5ba7fcb::tailz::TAILZ"
+export { package_id, NFT_Collection_ID, global_id, battleCollectionId ,tailzType};

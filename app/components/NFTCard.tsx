@@ -8,10 +8,7 @@ import {
 import { Transaction } from "@mysten/sui/transactions";
 import { useState, useEffect } from "react";
 import { useAccounts } from "@mysten/dapp-kit";
-const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
-const package_id="0x694dbe3915180f195f1e1a05623d7c3e2e26a08533afacb29c9a1d12dcc22c10"
-const global_id="0x6ddd851cbd64b960aa2447d584f018a651ec6c2d67621f8b02cc9957bdb60aa2"
-const DEDICATED_PAYMENT_COIN_ID="0x4b3da5a8052a85bb868c046d633c657a61ec1664eb44e69fb224ee8ad83c8b24"
+import { NFT_Collection_ID,package_id,global_id } from "../utils/constants";
 
 export default function NFTCard({ nft }) {
   // const [acc, setacc] = useState<string | null>(null)

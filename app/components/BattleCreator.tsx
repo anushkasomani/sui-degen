@@ -8,6 +8,7 @@ import {
 } from "@mysten/dapp-kit";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { NFT_Collection_ID,package_id,battleCollectionId } from "../utils/constants";
 
 interface Pet {
   id: string;
@@ -24,14 +25,6 @@ interface Pet {
 interface BattleCreatorProps {
   onBattleCreated: () => void;
 }
-
-const NFT_Collection_ID =
-  "0xc03ee66d6922dcb94a79c1f8fb9252575044e117106219b725a3d4e032bce40b";
-const packageId =
-  "0x58ef067daa0ad013898fb0a8c05cab46820c6521bfc0ec5570c20747d55d3d12";
-const battleCollectionId =
-  "0xd848c8b40736f054f1834ac5d13699967989ae47e9a1f54338598e1fb8833466";
-
 export default function BattleCreator({ onBattleCreated }: BattleCreatorProps) {
   const client = useSuiClient();
   const { mutate: signAndExecute, isPending } = useSignAndExecuteTransaction();
@@ -77,6 +70,8 @@ export default function BattleCreator({ onBattleCreated }: BattleCreatorProps) {
     },
   });
 
+  console.log("pets are", pets)
+
   const calculatePetScore = (pet: Pet) => {
     return (pet.happiness + pet.power) * pet.multiplier;
   };
@@ -96,8 +91,10 @@ export default function BattleCreator({ onBattleCreated }: BattleCreatorProps) {
       const tx = new Transaction();
 
       // Convert pet IDs to u256 format
-      const pet1Id = BigInt(selectedPet1.nft_id);
-      const pet2Id = BigInt(selectedPet2.nft_id);
+      // const pet1Id = BigInt(selectedPet1.id);
+      // const pet2Id = BigInt(selectedPet2.id);
+      // console.log("pets ids are", pet1Id, pet2Id)
+      console.log(selectedPet1.id)
       /*
   tx.moveCall({
     target: `${packageId}::tailz::create_battle`,
@@ -109,11 +106,12 @@ export default function BattleCreator({ onBattleCreated }: BattleCreatorProps) {
   });
 */
       tx.moveCall({
-        target: `${packageId}::tailz::create_battle`,
+        target: `${package_id}::tailz::create_battle`,
         arguments: [
           tx.object(battleCollectionId),
-          tx.pure.u256(pet1Id),
-          tx.pure.u256(pet2Id),
+          tx.pure.u256(selectedPet1.id),
+          tx.pure.u256(selectedPet1.id),
+           tx.object('0x6'),
         ],
       });
 

@@ -2,6 +2,11 @@
 import { useState, useEffect } from "react";
 import { useCountdown } from "../hooks/useCountdown";
 import { useSuiClient } from "@mysten/dapp-kit";
+import { Transaction } from "@mysten/sui/transactions";
+import {global_id, NFT_Collection_ID, tailzType, battleCollectionId, package_id} from "../utils/constants";
+import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { useAccounts } from "@mysten/dapp-kit";
+import toast from "react-hot-toast";
 
 interface Battle {
   id: string;
@@ -13,6 +18,7 @@ interface Battle {
   creator: string;
   is_active: boolean;
   created_at: Date;
+   stake_info: any,
   duration: number;
 }
 
@@ -30,11 +36,14 @@ interface BattleCardProps {
   onBattleEnd: (battleId: string, winner: number) => void;
 }
 
-const NFT_Collection_ID =
-  "0xc03ee66d6922dcb94a79c1f8fb9252575044e117106219b725a3d4e032bce40b";
+
 
 export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
+  const connectedAddress= useAccounts();
+  const address= connectedAddress[0];
   const client = useSuiClient();
+   const { mutate: signAndExecute, isPending: isMinting } =
+    useSignAndExecuteTransaction();
   const [pet1Data, setPet1Data] = useState<Pet | null>(null);
   const [pet2Data, setPet2Data] = useState<Pet | null>(null);
   const [battleEnded, setBattleEnded] = useState(false);
@@ -63,6 +72,7 @@ export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
   // Fetch pet data on component mount
   useEffect(() => {
     fetchPetData();
+    console.log(battle)
   }, [battle.pet1, battle.pet2]);
 
   // Hide battle after 12 minutes
@@ -144,6 +154,112 @@ export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
   const formatTime = (value: number) => {
     return value.toString().padStart(2, "0");
   };
+
+  const handleRewards= async()=>{
+  console.log(battle.stake_info)
+  }
+  const handleStake = async (petNumber: number) => {
+    console.log(address?.address)
+    const coins = await client.getCoins({
+  owner: address?.address,
+  coinType: tailzType,
+});
+
+console.log('Your TAILZ coin object IDs:', coins.data.map(c => c.coinObjectId));
+
+if (!coins.data || coins.data.length === 0) {
+  throw new Error("No TAILZ coins found in your wallet");
+}
+const paymentCoinObjectId = coins.data[0].coinObjectId;
+const tx = new Transaction();
+const [stakeCoin] = tx.splitCoins(
+  tx.object(coins.data[0].coinObjectId), 
+  [tx.pure.u64(5_000_000)]
+);
+
+ tx.moveCall({
+      target: `${package_id}::tailz::stake`,
+      
+      arguments: [
+        tx.object(battleCollectionId),
+        tx.pure.u64(battle.battle_id),
+        tx.pure.u8(petNumber),
+        stakeCoin,
+      ],
+    });
+
+    tx.setGasBudget(300_000_000);
+signAndExecute(
+  {
+    transaction: tx,
+  },
+  {
+    onSuccess: async ({ digest }) => {
+      const { effects } = await client.waitForTransaction({
+        digest,
+        options: {
+          showEffects: true,
+        },
+      });
+    },
+  }
+);
+  }
+
+const handleDeclareWinner = async () => {
+  handleRewards()
+  let winnerPetIndex = 0;
+  let winnerPetId: string | undefined;
+  if (battle.stake_total_pet1 > battle.stake_total_pet2) {
+    winnerPetIndex = 1;
+    winnerPetId = battle.pet1;
+  } else if (battle.stake_total_pet1 < battle.stake_total_pet2) {
+    winnerPetIndex = 2;
+    winnerPetId = battle.pet2;
+  } else {
+    console.log("oops, looks like we have tie in term of stakes. Let's see who's got it better socially");
+    return; // Prevent further execution if tie
+  }
+
+  if (winnerPetId === undefined) {
+    toast.error("Winner Pet ID is undefined!");
+    return;
+  }
+
+  const tx = new Transaction();
+  tx.moveCall({
+    target: `${package_id}::tailz::declare_winner`,
+    arguments: [
+      tx.object(battleCollectionId),
+      tx.pure.u64(winnerPetIndex),
+      tx.pure.u256(BigInt(winnerPetId)),
+      tx.object(global_id)
+    ]
+  });
+  signAndExecute(
+    {
+      transaction: tx,
+    },
+    {
+      onSuccess: async ({ digest }) => {
+        const { effects } = await client.waitForTransaction({
+          digest,
+          options: {
+            showEffects: true,
+          },
+        });
+        toast(
+          `Yay! Pet ${winnerPetIndex} is the winner.
+        Wait for sometime to see the rewards in your account`
+        );
+        
+      },
+    }
+  );
+};
+
+
+  
 
   return (
     <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-6 mb-6 border-2 border-gray-200">
@@ -236,6 +352,7 @@ export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
           <h4 className="text-center font-bold mb-4 text-blue-700 text-lg font-pixelify">
             🔵 Pet 1
           </h4>
+          
           {pet1Data ? (
             <>
               <div className="text-center mb-4">
@@ -286,6 +403,7 @@ export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
             <p className="font-bold text-blue-600 text-lg">
               {(battle.stake_total_pet1 / 1_000_000).toFixed(2)} TAILZ
             </p>
+            <button className="bg-blue-500 p-3" onClick={() => handleStake(1)}>stake</button>
           </div>
         </div>
 
@@ -360,6 +478,7 @@ export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
             <p className="font-bold text-red-600 text-lg">
               {(battle.stake_total_pet2 / 1_000_000).toFixed(2)} TAILZ
             </p>
+            <button className="bg-blue-500 p-3" onClick={()=>handleStake(2)}>stake</button>
           </div>
         </div>
       </div>
@@ -370,6 +489,7 @@ export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
           <div className="flex items-center space-x-4">
             <span>👤 Creator: {battle.creator.slice(0, 8)}...</span>
             <span>⏱️ Duration: {battle.duration}s</span>
+            <button onClick={handleDeclareWinner} disabled={!battle.is_active}>declare winner</button>
           </div>
           <div className="text-xs text-gray-500">
             Battle Age: {Math.floor(battleAge / 60)}m{" "}

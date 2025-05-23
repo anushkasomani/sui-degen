@@ -8,9 +8,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { useSuiClient } from "@mysten/dapp-kit";
 import { ConnectButton } from "@mysten/dapp-kit";
-
-const NFT_Collection_ID="0x7208c789a817a2aed6736673274669ff0ae78b29854d003137d451bd2f8c69f6"
-const package_id="0x694dbe3915180f195f1e1a05623d7c3e2e26a08533afacb29c9a1d12dcc22c10"
+import { NFT_Collection_ID,package_id } from "../utils/constants";
  
 interface ImageResultDisplayProps {
   imageUrl: string;
@@ -36,6 +34,7 @@ export function ImageResultDisplay({
   const [isMint, setIsMint] = useState(false); 
   const [mintStatus, setMintStatus] = useState<string | null>(null);
   const [imgUrl, setImgUrl] = useState<string>("intial"); 
+  const [lore, setLore] = useState<string>(backstory ?? "Lore not found")
   function base64ToFile(base64: string, filename: string): File {
   const arr = base64.split(',');
   const mimeMatch = arr[0].match(/:(.*?);/);
@@ -109,6 +108,9 @@ const handleMintNFT = async (e: React.FormEvent) => {
       arguments: [
         txb.object(NFT_Collection_ID),
         txb.pure.string(result.url),
+        txb.pure.string(petName??"Unknown pet "),
+        txb.pure.string(lore),
+
       ],
     })
 
@@ -162,10 +164,6 @@ const handleMintNFT = async (e: React.FormEvent) => {
 //       }
 //     );
 //   }
-
-
-
-
   return (
     <div className="p-6">
     <div className="flex flex-col md:flex-row justify-between space-x-0 md:space-x-10">
