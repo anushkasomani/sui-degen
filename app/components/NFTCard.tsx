@@ -9,6 +9,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useState, useEffect } from "react";
 import { useAccounts } from "@mysten/dapp-kit";
 import { NFT_Collection_ID,package_id,global_id } from "../utils/constants";
+import toast from "react-hot-toast";
 
 export default function NFTCard({ nft }) {
   // const [acc, setacc] = useState<string | null>(null)
@@ -50,6 +51,65 @@ export default function NFTCard({ nft }) {
     // setNewImageUrl("");
   };
 
+  const handleBackstory=async () => {
+    try {
+       const wantsToUpdateBackstory = window.confirm(
+      "Do you want to update the backstory?"
+       );
+       let finalBackstory = nft.lore;
+       if (wantsToUpdateBackstory) {
+      const prompt = window.prompt(
+        "How should the backstory evolve?",
+        "E.g., Bloop found a mysterious portal to Meme Mountain..."
+      );
+
+      if (prompt) {
+        const response = await fetch("/api/generate-backstory", {
+          method: "POST",
+          headers: {
+         "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+         originalBackstory: nft.lore,
+         prompt: prompt,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          finalBackstory = data.modifiedBackstory;
+          console.log(finalBackstory)
+          const tx = new Transaction();
+          tx.moveCall({
+         target: `${package_id}::tailz::update_backstory`,
+         arguments: [
+           tx.object(nft.id),
+           tx.pure.string(finalBackstory),
+           tx.pure.address(currentAccount?.address ?? "")
+         ]
+          });
+          signAndExecute(
+         {
+           transaction: tx
+         },
+         {
+           onSuccess: () => {
+          toast("NFT Evolved Succesfully");
+           }
+         }
+          );
+        } else {
+          throw new Error("Backstory generation failed");
+        }
+      }
+       } else {
+      return;
+       }
+     } catch (error) {
+       console.error(error);
+       toast.error("An error occurred while updating the backstory.");
+     }
+  };
   const handleEvolveWithoutChanges = async () => {
     // e.preventDefault();
     // if (!newImageUrl) return;
@@ -57,7 +117,7 @@ export default function NFTCard({ nft }) {
     const tx = new Transaction();
 
     tx.moveCall({
-      target: `${package_id}::dynamic_nft::level_up_without_changes`,
+      target: `${package_id}::tailz::level_up_without_changes`,
       arguments: [
         tx.object(NFT_Collection_ID), // &mut NFTCollection
         tx.pure.u64(nft.nft_id), // nft_id as u64
@@ -79,6 +139,7 @@ export default function NFTCard({ nft }) {
           });
 
           console.log(effects);
+          handleBackstory();
         },
       }
     );
@@ -195,7 +256,7 @@ tx.setGasBudget(200_000_000);
     const tx = new Transaction();
 
     tx.moveCall({
-      target: `${package_id}::dynamic_nft::level_up_with_changes`,
+      target: `${package_id}::tailz::level_up_with_changes`,
       arguments: [
         tx.object(NFT_Collection_ID), // &mut NFTCollection
         tx.pure.u64(nft.nft_id), // nft_id as u64

@@ -33,7 +33,9 @@ export default function Home(){
           console.log(nftData.data.content.fields.nft_id);
           return {
             id: nftData.data?.objectId,
+            pet_name: nftData.data?.content.fields.name,
             image_url: nftData.data.content.fields.image_url, // Url is a struct, value is the string
+            lore: nftData.data?.content.fields.backstory,
             level: nftData.data.content.fields.level,
             nft_id: nftData.data.content.fields.nft_id,
             owner: nftData.data.content.fields.owner,
@@ -49,7 +51,7 @@ export default function Home(){
 
   return(
     <div>
-        <div className="bg-white p-6 rounded-xl shadow-lg">
+        <div className="bg-white p-6 rounded-xl shadow-lg font-courier-prime">
           <ConnectButton/>
                 <h2 className="text-xl font-semibold mb-4">Your NFTs</h2>
       
