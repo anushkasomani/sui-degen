@@ -6,6 +6,23 @@ import BattleCreator from "../components/BattleCreator";
 import BattleCard from "../components/BattleCard";
 import { battleCollectionId } from "../utils/constants";
 
+interface StakeInfo {
+  fields: {
+    id: { id: string };
+    stakers_pet1: string[];
+    stakers_pet2: string[];
+    stakes_pet1: {
+      type: string;
+      // ObjectTable data
+    };
+    stakes_pet2: {
+      type: string;
+      // ObjectTable data
+    };
+  };
+  type: string;
+}
+
 interface Battle {
   id: string;
   battle_id: number;
@@ -16,7 +33,7 @@ interface Battle {
   creator: string;
   is_active: boolean;
   created_at: Date;
-  stake_info: any;
+  stake_info: StakeInfo;  // Now properly typed
   duration: number;
 }
 
@@ -65,7 +82,7 @@ export default function BattlePage() {
               creator: fields?.creator,
               is_active: fields?.is_active,
               stake_info: fields?.stake_info,
-              created_at: fields?.created_at,
+              created_at: new Date(),
               duration: battleDurations[battleId] || 300, // Use stored duration or default
             } as Battle;
           })
@@ -101,7 +118,7 @@ export default function BattlePage() {
     battles?.filter((battle) => {
       const battleAge =
         (new Date().getTime() - battle.created_at.getTime()) / 1000;
-      return battleAge <= 720; // 12 minutes
+      return battleAge <= 7200; 
     }) || [];
 
   return (

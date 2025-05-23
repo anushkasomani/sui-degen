@@ -8,6 +8,23 @@ import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { useAccounts } from "@mysten/dapp-kit";
 import toast from "react-hot-toast";
 
+interface StakeInfo {
+  fields: {
+    id: { id: string };
+    stakers_pet1: string[];
+    stakers_pet2: string[];
+    stakes_pet1: {
+      type: string;
+      // ObjectTable data
+    };
+    stakes_pet2: {
+      type: string;
+      // ObjectTable data
+    };
+  };
+  type: string;
+}
+
 interface Battle {
   id: string;
   battle_id: number;
@@ -18,9 +35,10 @@ interface Battle {
   creator: string;
   is_active: boolean;
   created_at: Date;
-   stake_info: any,
+  stake_info: StakeInfo;  // Now properly typed
   duration: number;
 }
+
 
 interface Pet {
   nft_id: number;
@@ -155,9 +173,89 @@ export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
     return value.toString().padStart(2, "0");
   };
 
-  const handleRewards= async()=>{
-  console.log(battle.stake_info)
+  const handleRewards = async (battle: Battle, winnerPet: number) => {
+  try {
+    const tx = new Transaction();
+    
+    // Correct access to stakers arrays
+    const stakersWinner = winnerPet === 1 
+      ? battle.stake_info.fields.stakers_pet1 
+      : battle.stake_info.fields.stakers_pet2;
+      
+    const stakersLoser = winnerPet === 1 
+      ? battle.stake_info.fields.stakers_pet2 
+      : battle.stake_info.fields.stakers_pet1;
+    
+    // Process winner stakers - they get their stakes back
+    for (const stakerAddr of stakersWinner) {
+      if (winnerPet === 1) {
+        tx.moveCall({
+          target: `${package_id}::tailz::withdraw_stake_pet1`,
+          arguments: [
+            tx.object(battleCollectionId),
+            tx.pure.u64(battle.battle_id),
+            tx.pure.address(stakerAddr),
+          ],
+        });
+
+        signAndExecute(
+          {
+            transaction:tx
+          },
+          
+        )
+
+      } else {
+        tx.moveCall({
+          target: `${package_id}::tailz::withdraw_stake_pet2`,
+          arguments: [
+            tx.object(battleCollectionId),
+            tx.pure.u64(battle.battle_id),
+            tx.pure.address(stakerAddr),
+          ],
+        });
+        signAndExecute(
+          {
+            transaction:tx
+          },
+            {
+          onSuccess: () => {
+        console.log(`sent back stakes for staker: ${stakerAddr}`);
+          }
+        }
+        )
+      }
+    }
+    
+    // Process loser stakers
+    for (const stakerAddr of stakersLoser) {
+      tx.moveCall({
+        target: `${package_id}::tailz::withdraw_stake_to_global_owner`,
+        arguments: [
+          tx.object(battleCollectionId),
+          tx.pure.u64(battle.battle_id),
+          tx.pure.address(stakerAddr),
+          tx.object(global_id),
+        ],
+      });
+      signAndExecute(
+        {
+          transaction: tx
+        },
+        {
+          onSuccess: () => {
+        console.log(`transferred stakes for staker: ${stakerAddr}`);
+          }
+        }
+      )
+    }
+
+}
+catch (err) {
+  console.log(err)
+}
   }
+
   const handleStake = async (petNumber: number) => {
     console.log(address?.address)
     const coins = await client.getCoins({
@@ -207,7 +305,7 @@ signAndExecute(
   }
 
 const handleDeclareWinner = async () => {
-  handleRewards()
+ 
   let winnerPetIndex = 0;
   let winnerPetId: string | undefined;
   if (battle.stake_total_pet1 > battle.stake_total_pet2) {
@@ -252,6 +350,7 @@ const handleDeclareWinner = async () => {
           `Yay! Pet ${winnerPetIndex} is the winner.
         Wait for sometime to see the rewards in your account`
         );
+        handleRewards(battle,winnerPetIndex)
         
       },
     }
