@@ -94,7 +94,7 @@ export default function BattleCreator({ onBattleCreated }: BattleCreatorProps) {
       // const pet1Id = BigInt(selectedPet1.id);
       // const pet2Id = BigInt(selectedPet2.id);
       // console.log("pets ids are", pet1Id, pet2Id)
-      console.log(selectedPet1.id)
+      console.log("selected pet1 id ",selectedPet1.id)
       /*
   tx.moveCall({
     target: `${packageId}::tailz::create_battle`,
@@ -109,8 +109,8 @@ export default function BattleCreator({ onBattleCreated }: BattleCreatorProps) {
         target: `${package_id}::tailz::create_battle`,
         arguments: [
           tx.object(battleCollectionId),
-          tx.pure.u256(selectedPet1.id),
-          tx.pure.u256(selectedPet1.id),
+          tx.pure.string(selectedPet1.id),
+          tx.pure.string(selectedPet2.id),
            tx.object('0x6'),
         ],
       });
@@ -153,23 +153,6 @@ export default function BattleCreator({ onBattleCreated }: BattleCreatorProps) {
         </div>
       </div>
 
-      {/* Battle Duration Selector */}
-      <div className="mb-6">
-        <label className="block text-sm font-bold mb-2 text-gray-800">
-          Battle Duration (seconds):
-        </label>
-        <select
-          value={battleDuration}
-          onChange={(e) => setBattleDuration(Number(e.target.value))}
-          className="w-full p-3 border-2 border-gray-300 rounded-lg text-gray-800 font-medium bg-white focus:border-blue-500 focus:outline-none"
-        >
-          <option value={60}>1 Minute</option>
-          <option value={300}>5 Minutes</option>
-          <option value={600}>10 Minutes</option>
-          <option value={1800}>30 Minutes</option>
-          <option value={3600}>1 Hour</option>
-        </select>
-      </div>
 
       {/* Pet Selection Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">

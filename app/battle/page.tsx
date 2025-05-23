@@ -32,20 +32,19 @@ interface Battle {
   stake_total_pet2: number;
   creator: string;
   is_active: boolean;
-  created_at: Date;
-  stake_info: StakeInfo;  // Now properly typed
-  duration: number;
+  stake_info: StakeInfo;
+  created_at: number;
+
 }
-
-
 
 export default function BattlePage() {
   const client = useSuiClient();
-  const [account] = useAccounts();
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const [battleDurations, setBattleDurations] = useState<{
-    [key: string]: number;
-  }>({});
+
+  // Handler to refresh battles when a new battle is created
+  function handleBattleCreated() {
+    setRefreshTrigger((prev) => prev + 1);
+  }
 
   const { data: battles } = useQuery({
     queryKey: ["battles", refreshTrigger],
@@ -77,13 +76,13 @@ export default function BattlePage() {
               battle_id: battleId,
               pet1: fields?.pet1,
               pet2: fields?.pet2,
-              stake_total_pet1: fields?.stake_total_pet1,
-              stake_total_pet2: fields?.stake_total_pet2,
+              stake_total_pet1: Number(fields?.stake_total_pet1),
+              stake_total_pet2: Number(fields?.stake_total_pet2),
               creator: fields?.creator,
               is_active: fields?.is_active,
               stake_info: fields?.stake_info,
-              created_at: new Date(),
-              duration: battleDurations[battleId] || 300, // Use stored duration or default
+              created_at:fields?.created_at
+              
             } as Battle;
           })
         );
@@ -94,35 +93,14 @@ export default function BattlePage() {
         return [];
       }
     },
-    refetchInterval: 5000, // Refetch every 5 seconds for live updates
+    refetchInterval: 5000, 
   });
-
-  const handleBattleCreated = (duration: number) => {
-    // Store the duration for the new battle
-    const newBattleId = (battles?.length || 0) + 1;
-    setBattleDurations((prev) => ({
-      ...prev,
-      [newBattleId]: duration,
-    }));
-
-    setRefreshTrigger((prev) => prev + 1);
-  };
-
-  const handleBattleEnd = (battleId: string, winner: number) => {
-    console.log(`Battle ${battleId} ended. Winner: Pet ${winner}`);
-    // Here you could implement TAILZ token transfer logic
-  };
-
-  // Filter out battles older than 12 minutes
-  const activeBattles =
-    battles?.filter((battle) => {
-      const battleAge =
-        (new Date().getTime() - battle.created_at.getTime()) / 1000;
-      return battleAge <= 7200; 
-    }) || [];
+console.log("battles are", battles)
+  // Defensive fallback for battles
+  const safeBattles = Array.isArray(battles) ? battles : [];
 
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="relative min-h-screen w-full font-courier-prime">
       <div
         className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url(/bg-gen.png)" }}
@@ -148,18 +126,18 @@ export default function BattlePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-2xl font-bold">
-                  {activeBattles.filter((b) => b.is_active).length}
+                  {safeBattles.filter((b) => b.is_active).length}
                 </div>
                 <div className="text-sm font-medium">Active Battles</div>
               </div>
               <div>
                 <div className="text-2xl font-bold">
-                  {activeBattles.filter((b) => !b.is_active).length}
+                  {safeBattles.filter((b) => !b.is_active).length}
                 </div>
                 <div className="text-sm font-medium">Completed Battles</div>
               </div>
               <div>
-                <div className="text-2xl font-bold">{activeBattles.length}</div>
+                <div className="text-2xl font-bold">{safeBattles.length}</div>
                 <div className="text-sm font-medium">Total Battles</div>
               </div>
             </div>
@@ -171,13 +149,13 @@ export default function BattlePage() {
               🔥 Live Battles
             </h2>
 
-            {activeBattles.length > 0 ? (
+            {safeBattles.length > 0 ? (
               <div className="space-y-6">
-                {activeBattles.map((battle) => (
+                {safeBattles.map((battle) => (
                   <BattleCard
                     key={battle.id}
                     battle={battle}
-                    onBattleEnd={handleBattleEnd}
+                    onBattleEnd={() => setRefreshTrigger((prev) => prev + 1)}
                   />
                 ))}
               </div>
