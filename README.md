@@ -4,7 +4,14 @@ Where retro gaming meets blockchain innovation, and your digital companions beco
 
 **Petropia** is an immersive web3 gaming platform where players create, mint, train, and evolve unique AI-generated NFT pets. Built on the Sui blockchain, every interaction—minting, feeding, training, battling—is recorded on-chain, making your pet's journey truly eternal.
 
-**Smart Contract Deployment (Sui Network):** `[Contract Address]`
+### 🧠 Smart Contract Details (Sui Network)
+
+- **Package ID**: [`0x61aacd...164c9`](https://suiexplorer.com/object/0x61aacdc12b7dc69abe385fc684c7fa32fb4468a90db95a46cafb247c2df164c9?network=mainnet)
+- **NFT Collection ID**: [`0x3575...acbf`](https://suiexplorer.com/object/0x35758890d2b392dd2699ef1bb9a07ce5c1fdeb70b10bccf8e6ed418ddc5bacbf?network=mainnet)
+- **Global State Object ID**: [`0xe328...be1a`](https://suiexplorer.com/object/0xe3286f231cc2312b0212406dd98e5cfee68af391eb212d46580c238e5d17be1a?network=mainnet)
+- **Battle Collection ID**: [`0xede2...85f3`](https://suiexplorer.com/object/0xede26f76990c34667fa4044354c4552af6780b35d24e6fd56455175824ae85f3?network=mainnet)
+- **NFT Type**: `0x61aacdc12b7dc69abe385fc684c7fa32fb4468a90db95a46cafb247c2df164c9::tailz::TAILZ`
+
 
 **Live Application:** [Petropia](https://pixelated-pets.vercel.app/)
 
