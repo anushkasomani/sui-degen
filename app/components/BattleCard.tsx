@@ -71,6 +71,10 @@ export default function BattleCard({ battle, onBattleEnd }: BattleCardProps) {
    const targetT= new Date(Number(battle.created_at)+ 5*60*60*1000)
    
 const [days, hours, minutes, seconds] = useCountdown(targetT);
+const safeDays = Math.max(0, days || 0);
+const safeHours = Math.max(0, hours || 0);
+const safeMinutes = Math.max(0, minutes || 0);
+const safeSeconds = Math.max(0, seconds || 0);
 
   useEffect(() => {
     fetchPetData();
@@ -304,7 +308,7 @@ const handleDeclareWinner = async () => {
     arguments: [
       tx.object(battleCollectionId),
       tx.pure.u64(winnerPetIndex),
-      tx.pure.u256(BigInt(winnerPetId)),
+      tx.pure.string(winnerPetId),
       tx.object(global_id)
     ]
   });
@@ -361,15 +365,29 @@ const handleDeclareWinner = async () => {
         ⏰ Time Remaining
       </h4>
       <div className="flex justify-center items-center space-x-3 text-3xl font-bold font-mono">
-        {days > 0 && (
-          <>
-            <div className="bg-white/20 rounded-lg px-3 py-2">
-              <span className="text-white">{String(days).padStart(2, '0')}</span>
-              <div className="text-xs text-white/80">DAYS</div>
-            </div>
-            <span className="text-white/60">:</span>
-          </>
-        )}
+        {safeDays > 0 && (
+  <>
+    <div className="bg-white/20 rounded-lg px-3 py-2">
+      <span className="text-white">{String(safeDays).padStart(2, '0')}</span>
+      <div className="text-xs text-white/80">DAYS</div>
+    </div>
+    <span className="text-white/60">:</span>
+  </>
+)}
+<div className="bg-white/20 rounded-lg px-3 py-2">
+  <span className="text-white">{String(safeHours).padStart(2, '0')}</span>
+  <div className="text-xs text-white/80">HRS</div>
+</div>
+<span className="text-white/60">:</span>
+<div className="bg-white/20 rounded-lg px-3 py-2">
+  <span className="text-white">{String(safeMinutes).padStart(2, '0')}</span>
+  <div className="text-xs text-white/80">MIN</div>
+</div>
+<span className="text-white/60">:</span>
+<div className="bg-white/20 rounded-lg px-3 py-2">
+  <span className="text-white">{String(safeSeconds).padStart(2, '0')}</span>
+  <div className="text-xs text-white/80">SEC</div>
+</div>
         <div className="bg-white/20 rounded-lg px-3 py-2">
           <span className="text-white">{String(hours).padStart(2, '0')}</span>
           <div className="text-xs text-white/80">HRS</div>
@@ -537,7 +555,9 @@ const handleDeclareWinner = async () => {
         <div className="flex justify-between items-center text-sm font-medium text-gray-700">
           <div className="flex items-center space-x-4">
             <span>👤 Creator: {battle.creator.slice(0, 8)}...</span>
-            <button onClick={handleDeclareWinner} >declare winner</button>
+            {address?.address === battle.creator && (
+              <button onClick={handleDeclareWinner}>declare winner</button>
+            )}
           </div>
         </div>
       </div>
