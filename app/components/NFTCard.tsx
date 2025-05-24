@@ -286,7 +286,7 @@ tx.setGasBudget(200_000_000);
   };
 
   return (
-    <div className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+    <div className="border rounded-lg overflow-hidden hover:shadow-md transition-shadow font-courier-prime">
       
       <div className="w-full h-100 p-3">
         <img
@@ -300,15 +300,8 @@ tx.setGasBudget(200_000_000);
       </div>
       <div className="p-4">
         <div className="flex justify-between items-center mb-3">
-          <span className="text-sm font-medium text-gray-700">
-            Points: {counter}
-          </span>
-          <button
-            onClick={() => setCounter(counter + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-1 rounded transition-colors"
-          >
-            Increment
-          </button>
+         
+         
         </div>
         <div className="mt-2 pt-2 border-t">
           <p className="font-mono">Level:</p>
@@ -336,28 +329,8 @@ tx.setGasBudget(200_000_000);
             {nft.owner}
           </p>
 
-          <p className="font-mono">NFT ID:</p>
-          <p className="text-xs text-gray-500 break-all font-mono bg-gray-50 p-1.5 rounded mb-2">
-            {/* <Link
-              to={`https://suiscan.xyz/testnet/object/${nft.id}/fields`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:text-blue-700 break-all"
-            >
-              {nft.id}
-            </Link> */}
-          </p>
-          <p className="font-mono">IPFS Link:</p>
-          <p className="text-xs text-gray-500 break-all font-mono bg-gray-50 p-1.5 rounded">
-            {/* <Link
-              to={`${nft.image_url}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:text-blue-700 break-all"
-            >
-              {nft.image_url}
-            </Link> */}
-          </p>
+          
+         
         </div>
 
         <div className="mt-3 pt-3 border-t">

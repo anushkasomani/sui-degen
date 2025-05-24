@@ -177,7 +177,7 @@ const handleMintNFT = async (e: React.FormEvent) => {
      
        <div className="flex flex-col ">
          <div className="p-1 rounded-lg bg-muted">
-          <ConnectButton/>
+          
 
       
     
@@ -193,6 +193,9 @@ const handleMintNFT = async (e: React.FormEvent) => {
       <div className="flex items-center justify-between">
         
         <div className="space-x-2 flex flex-col space-y-2">
+          <div className="font-pixelify">
+            <ConnectButton/>
+          </div>
           <Button className="outline sm bg-[#C9C9AA] font-pixelify" onClick={handleDownload} disabled={isMint}>
             <Download className="w-4 h-4 mr-2" />
             Download

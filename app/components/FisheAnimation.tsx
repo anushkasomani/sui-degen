@@ -36,7 +36,7 @@ export default function SwimmingFishes() {
           <>
             <div className="backdrop-blur-md p-4 rounded-lg">
               <BlurText
-                text="Token Tails"
+                text="Petropia"
                 delay={300}
                 animateBy="words"
                 direction="top"
@@ -111,10 +111,10 @@ export default function SwimmingFishes() {
     {/* Scrollable content box that takes 80% of viewport */}
     <div className="w-4/5 min-h-screen overflow-y-auto bg-white/95 rounded-lg shadow-lg p-4 flex items-center flex-col space-y-1">
      {/* <h1 className="font-pixelify text-xl md:text-5xl font-extrabold text-center text-gray-800 mb-6 p-4">
-      About Token Tails
+      About Petropia
     </h1> */}
     <BlurText
-                text="About Token Tails"
+                text="About Petropia"
                 delay={300}
                 animateBy="words"
                 direction="top"

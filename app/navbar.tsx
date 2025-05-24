@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <nav className="flex justify-between items-center px-6 md:px-12 lg:px-24 py-5 border-4 border-white bg-green-80 m-4">
       <div className="text-base sm:text-lg md:text-xl font-pixelify text-yellow-300">
-        Pixelated Pets
+        PetroPia!
       </div>
 
       <ul className="hidden md:flex space-x-8 text-xl font-bold font-pixelify text-[#8B4513]">
@@ -32,22 +32,8 @@ export default function Navbar() {
             Showcase
           </Link>
         </li>
-        <li>
-          <Link
-            href="/about"
-            className="hover:text-yellow-300 transition-colors"
-          >
-            About
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/contact"
-            className="hover:text-yellow-300 transition-colors"
-          >
-            Contact
-          </Link>
-        </li>
+       
+        
       </ul>
 
       <div className="ml-4">

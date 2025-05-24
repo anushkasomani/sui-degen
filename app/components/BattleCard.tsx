@@ -537,7 +537,7 @@ const handleDeclareWinner = async () => {
         <div className="flex justify-between items-center text-sm font-medium text-gray-700">
           <div className="flex items-center space-x-4">
             <span>👤 Creator: {battle.creator.slice(0, 8)}...</span>
-            <button onClick={handleDeclareWinner} disabled={!battle.is_active}>declare winner</button>
+            <button onClick={handleDeclareWinner} >declare winner</button>
           </div>
         </div>
       </div>
