@@ -2,7 +2,7 @@
 
 Where retro gaming meets blockchain innovation, and your digital companions become legendary NFTs.
 
-**Petropia** is an immersive web3 gaming platform where players create, mint, train, and evolve unique AI-generated NFT pets. Built on the Sui blockchain, every interaction—minting, feeding, training, battling—is recorded on-chain, making your pet's journey truly eternal.
+**Petropia** is an immersive degen-driven memeverse where players create, mint, train, and evolve unique AI-generated NFT pets. Built on the Sui blockchain, every interaction—minting, feeding, training, battling—is recorded on-chain, making your pet's journey truly eternal.
 
 ### 🧠 Smart Contract Details (Sui Network)
 
