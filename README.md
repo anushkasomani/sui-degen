@@ -42,11 +42,11 @@ Unlike static NFT collections, Petropia offers a dynamic experience where each p
 - Help other players' pets grow stronger through community interaction
 
 ### **🦋 Evolution Mechanics**
-- Pets evolve when `Points ≥ 20 × Current Level`
+- Pets evolve when `Points ≥ 15 × Current Level`
 - Each evolution adds new story elements and enhanced abilities
 - **Points Formula:** `(Happiness + Power) × Multiplier`
 
-### **🏆 Hall of Fame Showcase**
+### **🏆 Pet Collection**
 - Display the most powerful and beloved pets
 - Featured pets gain special recognition in the community
 - Showcase your prized companions to the world
