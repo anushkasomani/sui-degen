@@ -388,20 +388,6 @@ const handleDeclareWinner = async () => {
   <span className="text-white">{String(safeSeconds).padStart(2, '0')}</span>
   <div className="text-xs text-white/80">SEC</div>
 </div>
-        <div className="bg-white/20 rounded-lg px-3 py-2">
-          <span className="text-white">{String(hours).padStart(2, '0')}</span>
-          <div className="text-xs text-white/80">HRS</div>
-        </div>
-        <span className="text-white/60">:</span>
-        <div className="bg-white/20 rounded-lg px-3 py-2">
-          <span className="text-white">{String(minutes).padStart(2, '0')}</span>
-          <div className="text-xs text-white/80">MIN</div>
-        </div>
-        <span className="text-white/60">:</span>
-        <div className="bg-white/20 rounded-lg px-3 py-2">
-          <span className="text-white">{String(seconds).padStart(2, '0')}</span>
-          <div className="text-xs text-white/80">SEC</div>
-        </div>
       </div>
     </div>
   </div>
