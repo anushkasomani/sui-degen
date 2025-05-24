@@ -12,7 +12,7 @@ Where retro gaming meets blockchain innovation, and your digital companions beco
 
 
 
-**Live Application:** [Petropia](https://pixelated-pets.vercel.app/)
+**Live Application:** [Petropia](https://petropia.vercel.app/)
 
 ---
 
