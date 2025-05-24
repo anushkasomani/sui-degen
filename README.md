@@ -75,7 +75,7 @@ Connect your Sui-compatible wallet to enter the pixelated pet universe.
 - Craft a unique backstory and choose a quirky name
 - Mint your pet as an NFT to make it yours forever
 
-### **3. 🍖 Feed & 🏋️ Train**
+### **3. 🍖 Feed & 🏋️ Train to Earn TAILZ**
 **Feed Your Pet:**
 - +5 Happiness
 - +1 Power  
@@ -132,7 +132,8 @@ Display your trained pets in the Hall of Fame and share their journey with the c
 
 ##  🎯 Battle Arena: Ongoing Battles
 
-![image](https://github.com/user-attachments/assets/1b02a552-d6e0-44f7-ab72-d56e6536d8e2)
+![image](https://github.com/user-attachments/assets/bd42bdbb-4adb-44a5-b088-47a7ee721122)
+
 
 
 ---
