@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 Pixelated Pets – AI-Powered NFT Gaming on Sui Blockchain
 
-## Getting Started
+Where retro gaming meets blockchain innovation, and your digital companions become legendary NFTs.
 
-First, run the development server:
+**Pixelated Pets** is an immersive web3 gaming platform where players create, mint, train, and evolve unique AI-generated NFT pets. Built on the Sui blockchain, every interaction—minting, feeding, training, battling—is recorded on-chain, making your pet's journey truly eternal.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Smart Contract Deployment (Sui Network):** `[Contract Address]`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Live Application:** [Pixelated Pets](https://pixelated-pets.vercel.app/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧬 What Is Pixelated Pets?
 
-## Learn More
+Pixelated Pets transforms traditional NFTs into living, evolving digital companions. Combining AI-powered generation, retro pixel art aesthetics, and blockchain technology, it creates a vibrant gaming ecosystem where your pets grow stronger through care and interaction.
 
-To learn more about Next.js, take a look at the following resources:
+Unlike static NFT collections, Pixelated Pets offers a dynamic experience where each pet has unique stats, evolves over time, and can be trained by the entire community.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌟 Key Features
 
-## Deploy on Vercel
+### **🪄 AI-Powered Pet Generation**
+- Use advanced AI to create unique pixelated pets with custom backstories
+- Generate one-of-a-kind appearances, names, and personality traits
+- Each pet starts as a Baby Pet (Level 1) with room to grow
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### **⛓️ Sui Blockchain Integration**
+- Mint pets as NFTs directly on the Sui network
+- All interactions are recorded on-chain for transparency
+- Fast, low-cost transactions powered by Sui's architecture
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### **🍖 Community Training System**
+- **Feed Any Pet:** +5 Happiness, +1 Power, +0.1 Multiplier
+- **Train Any Pet:** +1 Happiness, +5 Power, +0.15 Multiplier
+- Help other players' pets grow stronger through community interaction
+
+### **🦋 Evolution Mechanics**
+- Pets evolve when `Points ≥ 20 × Current Level`
+- Each evolution adds new story elements and enhanced abilities
+- **Points Formula:** `(Happiness + Power) × Multiplier`
+
+### **🏆 Hall of Fame & Leaderboards**
+- Showcase the most powerful and beloved pets
+- Rankings based on both on-chain stats and community love
+- Featured pets gain special recognition
+
+### **🤝 Social Features**
+- Off-chain interactions boost leaderboard rankings
+- Community-driven pet care system
+- Share and celebrate pets together
+
+---
+
+## 🎮 How to Play
+
+### **1. 🔑 Connect Your Wallet**
+Connect your Sui-compatible wallet to enter the pixelated pet universe.
+
+### **2. 🪄 Create Your Unique Pet**
+- Use AI prompts to generate your pet's appearance
+- Craft a unique backstory and choose a quirky name
+- Mint your pet as an NFT to make it yours forever
+
+### **3. 🍖 Feed & 🏋️ Train**
+**Feed Your Pet:**
+- +5 Happiness
+- +1 Power  
+- +0.1 Multiplier
+
+**Train Your Pet:**
+- +1 Happiness
+- +5 Power
+- +0.15 Multiplier
+
+### **4. 🦋 Watch Them Evolve**
+When your pet reaches `Points ≥ 20 × Current Level`, they can evolve to the next stage, unlocking new abilities and story elements.
+
+### **5. 🏆 Climb the Rankings**
+Help your pets (and others!) reach the top of the leaderboard through consistent care and community support.
+
+---
+
+## 🏗️ Project Architecture
+
