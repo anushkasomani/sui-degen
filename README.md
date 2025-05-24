@@ -107,19 +107,26 @@ Display your trained pets in the Hall of Fame and share their journey with the c
 ## 📸 Screenshots
 
 ### 🏠 Landing Page
-*Beautiful pixelated homepage with animated pet companions*
+![image](https://github.com/user-attachments/assets/1f7e20e5-ee1c-4465-9a95-c34560370d2d)
+
+
 
 ### 🎨 Pet Creation
-*AI-powered pet generation with customization options*
+![image](https://github.com/user-attachments/assets/9c5f2046-09f7-45ae-82b4-1e7cfe27651e)
 
-### 🏆 Hall of Fame
-*Showcase of the most legendary pets in the community*
 
 ### 📊 Pet Collection
-*Your personal collection with detailed stats and training options*
+![image](https://github.com/user-attachments/assets/7d9e2eb8-7227-4d79-996e-41d4e3873416)
 
-### 🎯 Training Interface
-*Interactive feeding and training system*
+
+### 🎯 Battle Arena: Pit Pets Against Each Other
+
+![image](https://github.com/user-attachments/assets/dd836b3d-4200-459b-b62b-cd12bff940f4)
+
+##  🎯 Battle Arena: Ongoing Battles
+
+![image](https://github.com/user-attachments/assets/1b02a552-d6e0-44f7-ab72-d56e6536d8e2)
+
 
 ---
 
