@@ -133,12 +133,30 @@ Display your trained pets in the Hall of Fame and share their journey with the c
 
 ## 🚀 Getting Started
 
-### **Prerequisites**
-- Node.js 18+ 
-- Sui wallet (Sui Wallet, Martian, etc.)
-- Git
+### Installation Process:
 
-### **Installation**
+1. **Clone the Repo**
 
-1. **Clone the Repository**
+```bash
+git clone https://github.com/anushkasomani/base_batch
+cd base_batch
+```
+2. **create .env**
+```bash
+NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME=
+NEXT_PUBLIC_ONCHAINKIT_API_KEY=
+NFT_TEST_ADDRESS=
+PRIVATE_KEY=
+GEMINI_API_KEY=
+NEXT_PUBLIC_ALCHEMY_BASE_API_URL=
+```
+3. **run the development server**
+```bash 
+npm run dev
+```
+4.**Go to LocalHost**
+```bash
+http://localhost:3000/
+```
+
 
