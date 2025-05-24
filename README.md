@@ -93,3 +93,52 @@ Display your trained pets in the Hall of Fame and share their journey with the c
 │ • Sui dApp Kit  │    │ • NFT Storage   │    │ • Backstories   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
+
+
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Landing Page
+*Beautiful pixelated homepage with animated pet companions*
+
+### 🎨 Pet Creation
+*AI-powered pet generation with customization options*
+
+### 🏆 Hall of Fame
+*Showcase of the most legendary pets in the community*
+
+### 📊 Pet Collection
+*Your personal collection with detailed stats and training options*
+
+### 🎯 Training Interface
+*Interactive feeding and training system*
+
+---
+
+## 🛠️ Tech Stack
+
+| **Category**     | **Technology**                    | **Purpose**                      |
+|------------------|-----------------------------------|----------------------------------|
+| **Frontend**     | Next.js 14, TypeScript          | React framework & type safety   |
+| **Styling**      | Tailwind CSS, Custom Fonts      | Responsive UI & pixel aesthetics |
+| **Blockchain**   | Sui Network, Move Language       | Smart contracts & NFT storage   |
+| **Wallet**       | Sui dApp Kit, Wallet Adapters   | Seamless wallet integration     |
+| **Data**         | React Query, Sui Client          | State management & blockchain queries |
+| **AI**           | Gemini AI, Custom Prompts       | Pet generation & storytelling   |
+| **Deployment**   | Vercel, IPFS                     | Hosting & decentralized storage |
+
+---
+
+## 🚀 Getting Started
+
+### **Prerequisites**
+- Node.js 18+ 
+- Sui wallet (Sui Wallet, Martian, etc.)
+- Git
+
+### **Installation**
+
+1. **Clone the Repository**
+
