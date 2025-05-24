@@ -157,5 +157,32 @@ npm run dev
 ```bash
 http://localhost:3000/
 ```
+## 👥 Our Team
 
+### **Frontend & UI/UX**
+- **Lead Developer:** Pixel art implementation, responsive design
+- **Blockchain Integration:** Sui dApp Kit, wallet connections
+
+### **Backend & Smart Contracts**
+- **Move Developer:** Smart contract architecture, NFT standards
+- **API Integration:** AI services, data management
+
+### **AI & Content**
+- **AI Engineer:** Pet generation algorithms, story creation
+- **Game Design:** Training mechanics, evolution system
+
+---
+
+## 🙏 Acknowledgments
+
+- Sui Foundation for blockchain infrastructure
+- Gemini AI for generation capabilities
+- The pixel art community for inspiration
+- Our amazing beta testers and early adopters
+
+---
+
+**Built with ❤️ for the future of gaming and NFTs**
+
+*Pixelated Pets - Where every pixel tells a story, and every story becomes legend.*
 
