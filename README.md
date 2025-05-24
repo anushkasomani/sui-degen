@@ -40,15 +40,15 @@ Unlike static NFT collections, Pixelated Pets offers a dynamic experience where 
 - Each evolution adds new story elements and enhanced abilities
 - **Points Formula:** `(Happiness + Power) × Multiplier`
 
-### **🏆 Hall of Fame & Leaderboards**
-- Showcase the most powerful and beloved pets
-- Rankings based on both on-chain stats and community love
-- Featured pets gain special recognition
+### **🏆 Hall of Fame Showcase**
+- Display the most powerful and beloved pets
+- Featured pets gain special recognition in the community
+- Showcase your prized companions to the world
 
 ### **🤝 Social Features**
-- Off-chain interactions boost leaderboard rankings
 - Community-driven pet care system
 - Share and celebrate pets together
+- Interactive pet profiles with detailed backstories
 
 ---
 
@@ -76,8 +76,8 @@ Connect your Sui-compatible wallet to enter the pixelated pet universe.
 ### **4. 🦋 Watch Them Evolve**
 When your pet reaches `Points ≥ 20 × Current Level`, they can evolve to the next stage, unlocking new abilities and story elements.
 
-### **5. 🏆 Climb the Rankings**
-Help your pets (and others!) reach the top of the leaderboard through consistent care and community support.
+### **5. 🏆 Showcase Your Collection**
+Display your trained pets in the Hall of Fame and share their journey with the community.
 
 ---
 
