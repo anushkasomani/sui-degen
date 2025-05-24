@@ -6,11 +6,10 @@ Where retro gaming meets blockchain innovation, and your digital companions beco
 
 ### 🧠 Smart Contract Details (Sui Network)
 
-- **Package ID**: [`0x61aacd...164c9`](https://suiexplorer.com/object/0x61aacdc12b7dc69abe385fc684c7fa32fb4468a90db95a46cafb247c2df164c9?network=mainnet)
-- **NFT Collection ID**: [`0x3575...acbf`](https://suiexplorer.com/object/0x35758890d2b392dd2699ef1bb9a07ce5c1fdeb70b10bccf8e6ed418ddc5bacbf?network=mainnet)
-- **Global State Object ID**: [`0xe328...be1a`](https://suiexplorer.com/object/0xe3286f231cc2312b0212406dd98e5cfee68af391eb212d46580c238e5d17be1a?network=mainnet)
-- **Battle Collection ID**: [`0xede2...85f3`](https://suiexplorer.com/object/0xede26f76990c34667fa4044354c4552af6780b35d24e6fd56455175824ae85f3?network=mainnet)
-- **NFT Type**: `0x61aacdc12b7dc69abe385fc684c7fa32fb4468a90db95a46cafb247c2df164c9::tailz::TAILZ`
+- **Package ID**: [`0x017694b3f149a2bae73306e386ab7b423e84fe1daa5ca05e7e6514d8157fa348`](https://suiexplorer.com/object/0x017694b3f149a2bae73306e386ab7b423e84fe1daa5ca05e7e6514d8157fa348?network=testnet)
+- **NFT Collection ID**: [`0x03137402436274b7d1f15454f885f38512b8c344532050023ffb45faf968c35c`](https://suiexplorer.com/object/0x03137402436274b7d1f15454f885f38512b8c344532050023ffb45faf968c35c?network=testnet)
+- **Battle Collection ID**: [`0x262cb60cb3ba40e58a9c169f3685b6e7856735e96577f013ca9080d0195e2fce`](https://suiexplorer.com/object/0x262cb60cb3ba40e58a9c169f3685b6e7856735e96577f013ca9080d0195e2fce?network=testnet)
+
 
 
 **Live Application:** [Petropia](https://pixelated-pets.vercel.app/)
