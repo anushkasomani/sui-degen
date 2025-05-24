@@ -138,17 +138,16 @@ Display your trained pets in the Hall of Fame and share their journey with the c
 1. **Clone the Repo**
 
 ```bash
-git clone https://github.com/anushkasomani/base_batch
-cd base_batch
+git clone https://github.com/anushkasomani/sui-degen
+cd sui-degen
 ```
 2. **create .env**
 ```bash
-NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME=
-NEXT_PUBLIC_ONCHAINKIT_API_KEY=
-NFT_TEST_ADDRESS=
-PRIVATE_KEY=
 GEMINI_API_KEY=
-NEXT_PUBLIC_ALCHEMY_BASE_API_URL=
+PINATA_JWT=
+PINATA_API_KEY=
+PINATA_SECRET_KEY=
+NEXT_PUBLIC_GATEWAY_URL=
 ```
 3. **run the development server**
 ```bash 
