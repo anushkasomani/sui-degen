@@ -18,7 +18,7 @@ Where retro gaming meets blockchain innovation, and your digital companions beco
 
 ## 🧬 What Is Petropia?
 
-Petropia transforms traditional NFTs into living, evolving digital companions. Combining AI-powered generation, retro pixel art aesthetics, and blockchain technology, it creates a vibrant gaming ecosystem where your pets grow stronger through care and interaction.
+Petropia transforms traditional NFTs into living, evolving digital companions. Combining AI-powered generation, retro pixel art aesthetics, and blockchain technology, it creates a vibrant ecosystem where your pets grow stronger through care and interaction.
 
 Unlike static NFT collections, Petropia offers a dynamic experience where each pet has unique stats, evolves over time, and can be trained by the entire community.
 
@@ -39,6 +39,7 @@ Unlike static NFT collections, Petropia offers a dynamic experience where each p
 ### **🍖 Community Training System**
 - **Feed Any Pet:** +5 Happiness, +1 Power, +0.1 Multiplier
 - **Train Any Pet:** +1 Happiness, +5 Power, +0.15 Multiplier
+- In Every Feed or Train Interaction, you earn TAILZ
 - Help other players' pets grow stronger through community interaction
 
 ### **🦋 Evolution Mechanics**
@@ -50,6 +51,12 @@ Unlike static NFT collections, Petropia offers a dynamic experience where each p
 - Display the most powerful and beloved pets
 - Featured pets gain special recognition in the community
 - Showcase your prized companions to the world
+
+### ** Pet Battles**
+- Battle Pets against each other.
+- Stake TAILZ on Pet.
+- Winner Pet's owner gets 50% of the winning stakes/rewards
+- Stakers of Winning Pet get the rest of the rewards
 
 ### **🤝 Social Features**
 - Community-driven pet care system
@@ -80,7 +87,7 @@ Connect your Sui-compatible wallet to enter the pixelated pet universe.
 - +0.15 Multiplier
 
 ### **4. 🦋 Watch Them Evolve**
-When your pet reaches `Points ≥ 20 × Current Level`, they can evolve to the next stage, unlocking new abilities and story elements.
+When your pet reaches `Points ≥ 15 × Current Level`, they can evolve to the next stage, unlocking new abilities and story elements.
 
 ### **5. 🏆 Showcase Your Collection**
 Display your trained pets in the Hall of Fame and share their journey with the community.
@@ -193,9 +200,6 @@ We are a team of three developers:
 
 - Sui Foundation for blockchain infrastructure
 - Gemini AI for generation capabilities
-- The pixel art community for inspiration
-- Our amazing beta testers and early adopters
-
 ---
 
 **Built with ❤️ for the future of gaming and NFTs**
