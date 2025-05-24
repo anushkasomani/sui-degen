@@ -157,21 +157,24 @@ npm run dev
 ```bash
 http://localhost:3000/
 ```
-## 👥 Our Team
+## Our Team ✨
 
-### **Frontend & UI/UX**
-- **Lead Developer:** Pixel art implementation, responsive design
-- **Blockchain Integration:** Sui dApp Kit, wallet connections
+We are a team of three developers:
 
-### **Backend & Smart Contracts**
-- **Move Developer:** Smart contract architecture, NFT standards
-- **API Integration:** AI services, data management
+### Anushka Somani  
+**Role:** Frontend & Backend Developer [Github](https://github.com/anushkasomani)
 
-### **AI & Content**
-- **AI Engineer:** Pet generation algorithms, story creation
-- **Game Design:** Training mechanics, evolution system
+### Akash Mundari  
+**Role:** Backend & Smart Contract Developer 
+[Github](https://github.com/AkashMundari)
+
+
+### Avula Ramswaroop  
+**Role:** Frontend & Deployment 
+[Github](https://github.com/AvulaRamSwaroop)
 
 ---
+
 
 ## 🙏 Acknowledgments
 
