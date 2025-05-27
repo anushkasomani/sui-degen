@@ -88,8 +88,17 @@ const canStake = safeDays > 0 || safeHours > 0 || safeMinutes > 0 || safeSeconds
         options: { showContent: true },
       });
 
-      const nftsTableId =
-        collection.data?.content?.fields?.nfts?.fields?.id?.id;
+      let nftsTableId: string | undefined = undefined;
+      if (
+        collection.data?.content &&
+        "fields" in collection.data.content &&
+        (collection.data.content as any).fields?.nfts?.fields?.id?.id
+      ) {
+        nftsTableId = (collection.data.content as any).fields.nfts.fields.id.id;
+      }
+      if (!nftsTableId) {
+        throw new Error("Could not find nftsTableId in collection object");
+      }
       const nfts = await client.getDynamicFields({ parentId: nftsTableId });
       console.log(battle.pet1)
       const pet1Id = battle.pet1;
@@ -101,13 +110,21 @@ const canStake = safeDays > 0 || safeHours > 0 || safeMinutes > 0 || safeSeconds
           options: { showContent: true },
         });
 
-        const fields = nftData.data?.content?.fields;
+        let fields: any = undefined;
+        if (
+          nftData.data?.content &&
+          typeof nftData.data.content === "object" &&
+          "fields" in nftData.data.content
+        ) {
+          fields = (nftData.data.content as any).fields;
+        }
+
         const nftId = fields?.objectId;
 
-        if (nft.objectId === pet1Id) {
+        if (nft.objectId === pet1Id && fields) {
           setPet1Data({
             nft_id: fields?.nft_id,
-            pet_name:fields?.name,
+            pet_name: fields?.name,
             image_url: fields?.image_url,
             backstory: fields?.backstory,
             level: fields?.level,
@@ -117,10 +134,10 @@ const canStake = safeDays > 0 || safeHours > 0 || safeMinutes > 0 || safeSeconds
           });
         }
 
-        if (nft.objectId === pet2Id) {
+        if (nft.objectId === pet2Id && fields) {
           setPet2Data({
             nft_id: fields?.nft_id,
-            pet_name:fields?.name,
+            pet_name: fields?.name,
             image_url: fields?.image_url,
             backstory: fields?.backstory,
             level: fields?.level,
@@ -305,8 +322,9 @@ const handleDeclareWinner = async () => {
   const tx = new Transaction();
   tx.moveCall({
     target: `${package_id}::tailz::declare_winner`,
-    arguments: [
-  tx.object(battleCollectionId),// ✅ Use actual battle ID
+   arguments: [
+  tx.object(battleCollectionId),
+  tx.pure.u64(battle.battle_id), // ✅ Use actual battle ID
   tx.pure.string(winnerPetId),
   tx.object(global_id)
 ]
