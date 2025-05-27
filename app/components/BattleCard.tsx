@@ -75,7 +75,7 @@ const safeDays = Math.max(0, days || 0);
 const safeHours = Math.max(0, hours || 0);
 const safeMinutes = Math.max(0, minutes || 0);
 const safeSeconds = Math.max(0, seconds || 0);
-
+const canStake = safeDays > 0 || safeHours > 0 || safeMinutes > 0 || safeSeconds > 0;
   useEffect(() => {
     fetchPetData();
     console.log(battle)
@@ -306,8 +306,7 @@ const handleDeclareWinner = async () => {
   tx.moveCall({
     target: `${package_id}::tailz::declare_winner`,
     arguments: [
-  tx.object(battleCollectionId),
-  tx.pure.u64(battle.battle_id), // ✅ Use actual battle ID
+  tx.object(battleCollectionId),// ✅ Use actual battle ID
   tx.pure.string(winnerPetId),
   tx.object(global_id)
 ]
@@ -453,7 +452,11 @@ const handleDeclareWinner = async () => {
             <p className="font-bold text-blue-600 text-lg">
               {(battle.stake_total_pet1 / 1_000_000).toFixed(2)} TAILZ
             </p>
-            <button className="bg-blue-500 p-3" onClick={() => handleStake(1)}>stake</button>
+           {
+              canStake && (
+              <button className="bg-blue-500 p-3" onClick={() => handleStake(1)}>stake</button>
+              )
+            }
           </div>
         </div>
 
@@ -525,7 +528,11 @@ const handleDeclareWinner = async () => {
             <p className="font-bold text-red-600 text-lg">
               {(battle.stake_total_pet2 / 1_000_000).toFixed(2)} TAILZ
             </p>
-            <button className="bg-blue-500 p-3" onClick={()=>handleStake(2)}>stake</button>
+            {
+              canStake && (
+              <button className="bg-red-500 p-3" onClick={() => handleStake(2)}>stake</button>
+              )
+            }
           </div>
         </div>
       </div>
