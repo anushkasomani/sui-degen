@@ -471,7 +471,7 @@ const handleDeclareWinner = async () => {
               {(battle.stake_total_pet1 / 1_000_000).toFixed(2)} TAILZ
             </p>
            {
-              canStake && (
+              canStake && battle.is_active && (
               <button className="bg-blue-500 p-3" onClick={() => handleStake(1)}>stake</button>
               )
             }
@@ -547,7 +547,7 @@ const handleDeclareWinner = async () => {
               {(battle.stake_total_pet2 / 1_000_000).toFixed(2)} TAILZ
             </p>
             {
-              canStake && (
+              canStake && battle.is_active && (
               <button className="bg-red-500 p-3" onClick={() => handleStake(2)}>stake</button>
               )
             }
