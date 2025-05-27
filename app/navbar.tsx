@@ -32,6 +32,15 @@ export default function Navbar() {
             Showcase
           </Link>
         </li>
+
+           <li>
+          <Link
+            href="/showcase"
+            className="hover:text-yellow-300 transition-colors"
+          >
+            About
+          </Link>
+        </li>
        
         
       </ul>

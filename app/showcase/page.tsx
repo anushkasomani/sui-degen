@@ -77,11 +77,11 @@ export default function Home(){
         {/* Header Section */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-pixelify text-[#8B4513] mb-4 drop-shadow-lg">
-            🎮 Your Pet Collection 🎮
+            🎮  Pet Collection 🎮
           </h1>
           <div className="bg-white border-4 border-[#8B4513] rounded-xl p-4 inline-block shadow-lg">
             <p className="text-lg font-pixelify text-[#8B4513]">
-              Welcome back, Trainer! Manage your pixelated pets here.
+              Hello! Explore NFT Pets here .
             </p>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function Home(){
           <div className="flex flex-col md:flex-row justify-between items-center mb-6 p-4 bg-gradient-to-r from-yellow-100 to-yellow-200 border-2 border-yellow-400 rounded-lg">
             <div className="flex items-center space-x-4 mb-4 md:mb-0">
               <h2 className="text-2xl md:text-3xl font-pixelify text-[#8B4513] drop-shadow-sm">
-                🏆 Your NFTs
+                🏆Overall NFTs
               </h2>
               <div className="bg-green-500 text-white px-3 py-1 rounded-lg font-pixelify text-sm border-2 border-green-600">
                 Total: {nfts?.length || 0}
@@ -114,7 +114,7 @@ export default function Home(){
                   🔌 Connect Your Wallet
                 </h3>
                 <p className="text-lg font-pixelify text-yellow-700">
-                  Please connect your wallet to view your NFT collection!
+                  Please connect your wallet to view the NFTs!
                 </p>
               </div>
             </div>

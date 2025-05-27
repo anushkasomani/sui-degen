@@ -136,7 +136,7 @@ const safeSeconds = Math.max(0, seconds || 0);
   };
 
   const calculatePetScore = (pet: Pet) => {
-    return (pet.happiness + pet.power) * pet.multiplier;
+    return (pet.happiness + pet.power) * pet.multiplier / 1000;
   };
 
 
@@ -306,11 +306,11 @@ const handleDeclareWinner = async () => {
   tx.moveCall({
     target: `${package_id}::tailz::declare_winner`,
     arguments: [
-      tx.object(battleCollectionId),
-      tx.pure.u64(winnerPetIndex),
-      tx.pure.string(winnerPetId),
-      tx.object(global_id)
-    ]
+  tx.object(battleCollectionId),
+  tx.pure.u64(battle.battle_id), // ✅ Use actual battle ID
+  tx.pure.string(winnerPetId),
+  tx.object(global_id)
+]
   });
   signAndExecute(
     {
@@ -440,10 +440,7 @@ const handleDeclareWinner = async () => {
                   <span className="text-purple-600">{pet1Data.multiplier /1000}</span>
                 </div>
                 <div className="flex justify-between border-t-2 border-blue-200 pt-2 mt-3">
-                  <span className="font-bold text-blue-700">Total Score:</span>
-                  <span className="font-bold text-blue-700 text-lg">
-                    {calculatePetScore(pet1Data)}
-                  </span>
+
                 </div>
               </div>
             </>
@@ -515,10 +512,7 @@ const handleDeclareWinner = async () => {
                   <span className="text-purple-600">{pet2Data.multiplier/1000}</span>
                 </div>
                 <div className="flex justify-between border-t-2 border-red-200 pt-2 mt-3">
-                  <span className="font-bold text-red-700">Total Score:</span>
-                  <span className="font-bold text-red-700 text-lg">
-                    {calculatePetScore(pet2Data)}
-                  </span>
+                 
                 </div>
               </div>
             </>
@@ -541,7 +535,7 @@ const handleDeclareWinner = async () => {
         <div className="flex justify-between items-center text-sm font-medium text-gray-700">
           <div className="flex items-center space-x-4">
             <span>👤 Creator: {battle.creator.slice(0, 8)}...</span>
-            {address?.address === battle.creator && (
+            {address?.address === battle.creator && battle.is_active && (
               <button onClick={handleDeclareWinner}>declare winner</button>
             )}
           </div>
